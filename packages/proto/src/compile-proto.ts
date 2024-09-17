@@ -1,4 +1,4 @@
-import {$} from 'zx'
+import {$, cd} from 'zx'
 
 const cwd = process.cwd();
 console.log('cwd:', cwd);
@@ -9,11 +9,11 @@ const options = [
     '--ts_proto_opt=importSuffix=.js',
     '--ts_proto_opt=esModuleInterop=true',
      '--ts_proto_out='+cwd+'/generated',
-    '--proto_path=../proto/cometbft-0.38.11/proto',
-    '--proto_path=../proto/gogoproto',
-    '--proto_path=../proto'
+    '--proto_path=../cometbft-0.38.12/proto',
+    '--proto_path=../gogoproto',
+    '--proto_path=../'
 ];
 
-$`rm -rf generated`
-    .then(() => $`mkdir generated`)
+$`rm -rf ./generated`
+    .then(() => $`mkdir ./generated`)
     .then(() => $`protoc ${options} tendermint/abci/types.proto`);

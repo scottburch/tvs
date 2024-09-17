@@ -1,7 +1,10 @@
 FROM node
 
-COPY . app
-WORKDIR app
+RUN wget https://github.com/scottburch/tvs/archive/refs/heads/main.zip
+RUN unzip main.zip
+
+WORKDIR tvs-main
+
 RUN yarn
 
 WORKDIR packages/crypto

@@ -10,6 +10,7 @@
     <option name="extraTypeScriptOptions" value="" />
     <option name="scriptName" value="$PROJECT_DIR$/packages/proto/src/compile-proto.ts" />
     <option name="programParameters" value="" />
+    <option name="tsnodePackage" value="~/work/tvs/node_modules/ts-node" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

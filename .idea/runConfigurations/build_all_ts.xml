@@ -2,7 +2,7 @@
   <configuration default="false" name="build-all.ts" type="TypeScriptProgramRunner" factoryName="TypeScript">
     <module name="tvs" />
     <option name="interpreterRef" value="project" />
-    <option name="tsnodePackageRef" value="$PROJECT_DIR$/node_modules/ts-node" />
+    <option name="tsnodePackageRef" value="~/work/tvs/node_modules/ts-node" />
     <option name="enabledTsNodeEsmLoader" value="true" />
     <option name="interpreterOptions" value="" />
     <option name="workingDirectory" value="$PROJECT_DIR$/scripts" />

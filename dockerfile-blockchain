@@ -1,9 +1,11 @@
 FROM node
 
-COPY ./packages/blockchain/cometBFT/linux_arm64/cometbft /usr/local/bin
+RUN wget https://github.com/scottburch/tvs/archive/refs/heads/main.zip
+RUN unzip main.zip
 
-COPY . app
-WORKDIR app
+WORKDIR tvs-main
+
+COPY ./packages/blockchain/cometBFT/linux_arm64/cometbft /usr/local/bin
 RUN yarn
 
 WORKDIR packages/crypto
