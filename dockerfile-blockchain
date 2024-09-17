@@ -1,0 +1,23 @@
+FROM node
+
+COPY ./packages/blockchain/cometBFT/linux_arm64/cometbft /usr/local/bin
+
+COPY . app
+WORKDIR app
+RUN yarn
+
+WORKDIR packages/crypto
+RUN yarn build
+
+WORKDIR ../proto
+RUN yarn build
+
+WORKDIR ../blockchain
+RUN yarn build
+
+WORKDIR ../vote
+RUN yarn build
+
+WORKDIR ../vote
+ENTRYPOINT yarn start-demo-server
+#ENTRYPOINT cat /dev/random > /dev/null

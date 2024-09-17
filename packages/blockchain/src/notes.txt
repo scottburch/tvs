@@ -1,0 +1,5 @@
+Looks like more work needs to be done to the store stuff
+
+1) Need to have  a store for each transaction
+2) Need to invalidate the transaction store for a bad transaction
+3) Need to write all of the good transaction stores from a block on commit

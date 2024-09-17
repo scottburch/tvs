@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="compile-proto.ts" type="TypeScriptProgramRunner" factoryName="TypeScript">
+    <module name="tvs" />
+    <option name="interpreterRef" value="project" />
+    <option name="tsnodePackageRef" value="~/work/uvs/node_modules/ts-node" />
+    <option name="enabledTsNodeEsmLoader" value="true" />
+    <option name="interpreterOptions" value="" />
+    <option name="workingDirectory" value="$PROJECT_DIR$/packages/proto/src" />
+    <option name="tsconfigFile" value="" />
+    <option name="extraTypeScriptOptions" value="" />
+    <option name="scriptName" value="$PROJECT_DIR$/packages/proto/src/compile-proto.ts" />
+    <option name="programParameters" value="" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

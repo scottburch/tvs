@@ -1,0 +1,60 @@
+{
+  "name": "@tvs/webapp",
+  "version": "1.1.16",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@end-game/dtg-scripts": "^1.1.14",
+    "@end-game/test-utils": "^1.1.16",
+    "@end-game/utils": "^1.1.15",
+    "@mui/icons-material": "^6.0.2",
+    "@mui/material": "^6.0.2",
+    "@mui/x-data-grid": "^7.16.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@tvs/vote": "^1.0.0",
+    "@yudiel/react-qr-scanner": "^2.0.8",
+    "date-fns": "^2.30.0",
+    "local-web-server": "^5.4.0",
+    "lodash-es": "^4.17.21",
+    "qrcode.react": "^4.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^6.13.0",
+    "react-router-dom": "^6.13.0",
+    "ts-loader": "^9.4.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.6.2"
+  },
+  "scripts": {
+    "dev": "dtg-scripts dev --port 1515",
+    "build": "dtg-scripts build",
+    "serve": "ws --directory dist --spa index.html --rewrite '/api/(.*) -> http://localhost:1234/$1' --port 1515",
+    "test": "dtg-scripts test"
+  },
+  "engines": {
+    "node": ">=19"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "mocha": {
+    "require": "ts-node/register",
+    "loader": "ts-node/esm",
+    "bail": true,
+    "timeout": 100000,
+    "async-only": true
+  }
+}

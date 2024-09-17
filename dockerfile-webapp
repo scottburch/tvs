@@ -1,0 +1,27 @@
+FROM node
+
+COPY . app
+WORKDIR app
+RUN yarn
+
+WORKDIR packages/crypto
+RUN yarn build
+
+WORKDIR ../proto
+RUN yarn build
+
+WORKDIR ../blockchain
+RUN yarn build
+
+WORKDIR ../vote
+RUN yarn build
+
+WORKDIR ../react
+RUN yarn build
+
+WORKDIR ../webapp
+RUN yarn build
+
+WORKDIR ../webapp
+ENTRYPOINT yarn serve
+

@@ -1,0 +1,32 @@
+{
+  "name": "@tvs/proto",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@types/node": "^22.3.0",
+    "rxjs": "^7.8.1",
+    "ts-node": "^10.9.2",
+    "ts-proto": "^2.0.2",
+    "typescript": "^5.5.4",
+    "zx": "^8.1.4"
+  },
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "scripts": {
+    "build": "rm -rf lib && ../blockchain/node_modules/.bin/tsc",
+    "test": "../blockchain/node_modules/.bin/mocha src/**/*.spec.ts"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "mocha": {
+    "require": "ts-node/register",
+    "loader": "ts-node/esm",
+    "experimental-specifier-resolution": "node",
+    "bail": true,
+    "timeout": 2000,
+    "async-only": true
+  }
+}

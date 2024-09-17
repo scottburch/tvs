@@ -1,0 +1,2 @@
+export type {KeyPair, WithSignature, SerializedPubKey, PrivKey, PubKey, SerializedSig, SerializedPrivKey, Signature, EncryptedPrivKey} from './crypto.js'
+export {generateNewKeyPair, serializeKey, deserializeKey, deserializeSig, serializeSig, sign, verify, keyPairFromSerializedPrivKey, encryptPrivKey, decryptPrivKey} from './crypto.js'

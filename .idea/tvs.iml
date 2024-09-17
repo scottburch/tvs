@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/packages/blockchain/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/crypto/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/proto/proto/cometbft" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/vote/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/webapp/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/webapp/lib" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
