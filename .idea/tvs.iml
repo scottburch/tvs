@@ -9,6 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/vote/lib" />
       <excludeFolder url="file://$MODULE_DIR$/packages/webapp/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/webapp/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/proto/lib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
