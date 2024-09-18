@@ -1,5 +1,5 @@
 {
-  "name": "@tvs/webapp",
+  "name": "@tvs/website",
   "version": "1.1.1",
   "type": "module",
   "private": true,
@@ -15,12 +15,8 @@
     "@types/lodash-es": "^4.17.12",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "@tvs/vote": "^1.0.0",
-    "@yudiel/react-qr-scanner": "^2.0.8",
-    "date-fns": "^2.30.0",
     "local-web-server": "^5.4.0",
     "lodash-es": "^4.17.21",
-    "qrcode.react": "^4.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.13.0",
@@ -30,9 +26,9 @@
     "typescript": "^5.6.2"
   },
   "scripts": {
-    "dev": "dtg-scripts dev --port 1515",
+    "dev": "dtg-scripts dev --port 1616",
     "build": "dtg-scripts build",
-    "serve": "ws --directory dist --spa index.html --rewrite '/api/(.*) -> http://localhost:1234/$1' --port 1515",
+    "serve": "ws --directory dist --spa index.html --port 1616",
     "test": "dtg-scripts test"
   },
   "engines": {
