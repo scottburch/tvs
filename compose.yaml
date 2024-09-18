@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: dockerfile-blockchain
+      args:
+        ARCH: $ARCH
 
   webapp:
     container_name: webapp

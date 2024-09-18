@@ -1,17 +1,15 @@
 FROM node
 
-#RUN curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v28.1/protoc-28.1-linux-aarch_64.zip
-#RUN unzip protoc-28.1-linux-aarch_64.zip -d protoc3
-#RUN mv protoc3/bin/* /usr/local/bin/
-#RUN mv protoc3/include/* /usr/local/include/
-
+ARG ARCH
+ENV ARCH $ARCH
 
 RUN wget https://github.com/scottburch/tvs/archive/refs/heads/main.zip
 RUN unzip main.zip
-
 WORKDIR tvs-main
 
-COPY ./packages/blockchain/cometBFT/linux_arm64/cometbft /usr/local/bin
+# install cometBFT
+COPY ./packages/blockchain/cometBFT/linux_${ARCH}/cometbft /usr/local/bin
+
 RUN yarn
 
 WORKDIR packages/crypto
