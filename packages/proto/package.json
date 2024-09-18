@@ -15,7 +15,8 @@
     ".": "./lib/index.js"
   },
   "scripts": {
-    "build": "rm -rf lib && node src/compile-proto.js && ../blockchain/node_modules/.bin/tsc",
+    "build-proto": "node src/compile-proto.js",
+    "build": "rm -rf lib && ../blockchain/node_modules/.bin/tsc",
     "test": "../blockchain/node_modules/.bin/mocha src/**/*.spec.ts"
   },
   "engines": {
