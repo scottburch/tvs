@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from "react";
-import {Box, Typography} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 
 export const ItemWithTitle: React.FC<PropsWithChildren<{title: string}>> = ({title, children}) => (
     <Box>
@@ -15,6 +15,10 @@ const Title: React.FC<PropsWithChildren> = ({children}) => (
 );
 
 const Body: React.FC<PropsWithChildren> = ({children}) => (
-    <Typography variant={'body1'} sx={{mb: '1.5rem', pl: '2rem', py: '1rem'}}>{children}</Typography>
+    <Typography variant={'body1'} sx={{pl: '2rem', py: '1rem'}}>
+        <Stack spacing={1}>
+            {children}
+        </Stack>
+    </Typography>
 );
 
