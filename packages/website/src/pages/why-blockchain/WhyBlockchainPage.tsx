@@ -104,6 +104,15 @@ export const WhyBlockchainPage: React.FC = () => {
                     transactions stored on other nodes.
                 </Typography>
 
+                <Typography variant={'h5'}>
+                    How do I know that a node is not lying about the stored data?
+                </Typography>
+                <Typography>
+                    Unless you run your own node, and keep it secure, you won't.  Blockchains do not guarantee the security of
+                    individual nodes, only the integrity of the network.  If you want to ensure that the information you get is
+                    good, you should check it against several nodes to reduce the chance of getting incorrect data.
+                </Typography>
+
 
                 <Typography variant={'h5'}>
                     How do we know there is not a back-door or hidden cheat in the code?
