@@ -133,6 +133,16 @@ export const WhyBlockchainPage: React.FC = () => {
                     used to vote again in that race.
                 </Typography>
 
+                <Typography variant={'h5'}>
+                    What blockchain does TVS use?
+                </Typography>
+                <Typography>
+                    TVS uses a custom transaction processing framework built on top of the CometBFT blockchain/consensus engine
+                    (formerly Tendermint).
+                    Unlike other blockchains, there are no tokens or digital currency.  TVS is built from the ground up without
+                    those capabilities to eliminate unnecessary overhead.
+                </Typography>
+
             </Stack>
         </Container>
     )
