@@ -1,14 +1,21 @@
 import React from "react";
-import {AppBar, Box, Typography} from "@mui/material";
+import {AppBar, Box, Button, Stack, Typography} from "@mui/material";
+import {Link} from "react-router-dom";
 
 export const Header: React.FC = () => {
+
     return (
 
         <AppBar>
-            <Typography fontSize={'20px'} lineHeight={'40px'} px={1}>
-                Transparent Voting
-            </Typography>
-
+            <Box sx={{display: 'flex', height: '4rem', px: 2}}>
+                <Typography sx={{flex: 1, fontSize: '2rem', lineHeight:'4rem'}}>
+                    Transparent Voting
+                </Typography>
+                <Box sx={{display: 'flex', flexDirection: 'row', gap: 2}}>
+                    <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/more-info'}>more info</Link></Typography>
+                    <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/'}>home</Link></Typography>
+                </Box>
+            </Box>
         </AppBar>
     )
 }
