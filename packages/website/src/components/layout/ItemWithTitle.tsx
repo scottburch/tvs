@@ -15,10 +15,10 @@ const Title: React.FC<PropsWithChildren> = ({children}) => (
 );
 
 const Body: React.FC<PropsWithChildren> = ({children}) => (
-    <Typography variant={'body1'} sx={{pl: '2rem', py: '1rem'}}>
+    <Box sx={{pl: '2rem', py: '1rem'}}>
         <Stack spacing={1}>
             {children}
         </Stack>
-    </Typography>
+    </Box>
 );
 

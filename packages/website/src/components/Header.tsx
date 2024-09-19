@@ -12,6 +12,7 @@ export const Header: React.FC = () => {
                     Transparent Voting
                 </Typography>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 2}}>
+                    <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/why-blockchain'}>why blockchain</Link></Typography>
                     <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/more-info'}>more info</Link></Typography>
                     <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/'}>home</Link></Typography>
                 </Box>

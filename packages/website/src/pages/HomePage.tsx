@@ -20,6 +20,7 @@ const convo = [
         "Providing trust in the system"
     ],
     "Tell me more", <Link style={{color: 'white'}} to={'/more-info'}>{location.origin}/more-info</Link>,
+    "I don't know anything about blockchain", <Link to={'/why-blockchain'} style={{color: 'white'}}>{location.origin}/why-blockchain</Link>,
     "Can I see it?", <Link style={{color: 'white'}} to={'/try-tvs'}>{location.origin}/try-tvs</Link>
 ];
 

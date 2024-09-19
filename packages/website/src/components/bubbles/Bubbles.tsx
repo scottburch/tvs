@@ -14,12 +14,13 @@ export const BubbleMessage: React.FC<PropsWithChildren<{from: 'me' | 'them'}>> =
 )
 
 export const BubbleConvo: React.FC<{convo: (ReactNode | ReactNode[])[]}> = ({convo}) => {
+    let count = 0;
     return (
         <Bubbles>
             {convo.map((it, idx) => Array.isArray(it) ? (
-                it.map(it => <BubbleMessage from={idx % 2 ? 'me' : 'them'}>{it}</BubbleMessage>)
+                it.map(it => <BubbleMessage key={count++} from={idx % 2 ? 'me' : 'them'}>{it}</BubbleMessage>)
             ) :
-                (<BubbleMessage from={idx % 2 ? 'me' : 'them'}>{it}</BubbleMessage>)
+                (<BubbleMessage key={count++} from={idx % 2 ? 'me' : 'them'}>{it}</BubbleMessage>)
             )}
         </Bubbles>
     )
