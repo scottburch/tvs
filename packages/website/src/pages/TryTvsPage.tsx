@@ -1,17 +1,5 @@
 import React, {useState} from 'react'
-import {
-    Box,
-    Button,
-    Container, List, ListItem, ListItemText,
-    Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography
-} from "@mui/material";
+import {Button, Container, List, ListItem, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
 import {QRCodeSVG} from "qrcode.react";
 
 export const TryTvsPage: React.FC = () => {
@@ -34,6 +22,7 @@ export const TryTvsPage: React.FC = () => {
                             <TableRow>
                                 <TableCell>Role</TableCell>
                                 <TableCell>Login ID</TableCell>
+                                <TableCell>QR Code (for mobile)</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -83,11 +72,11 @@ export const TryTvsPage: React.FC = () => {
                         Unpack the tvs-docker.tgz file
                     </ListItem>
                     <ListItem sx={{display: 'list-item'}}>
-                            In a terminal type: <code>docker compose build --build-arg ARCH=amd64</code>
+                        In a terminal type: <Typography component={'code'}>docker compose build --build-arg ARCH=amd64</Typography>
                             <Typography variant={'subtitle2'}>If you are on a ARM based system (like the Mac M series), replace "amd64" with "arm64"</Typography>
                     </ListItem>
                     <ListItem sx={{display: 'list-item'}}>
-                            When that completes (which might take a while), type: <code>docker compose up</code>
+                        When that completes (which might take a while), type: <Typography component={'code'}>docker compose up</Typography>
                     </ListItem>
                     <ListItem sx={{display: 'list-item'}}>
                             Go to url: <a href={'http://localhost:1515'}>http://localhost:1515</a>
@@ -101,13 +90,21 @@ export const TryTvsPage: React.FC = () => {
                     Since TVS uses encryption, the application will not run in a non-secure context (http vs https).
                     In order to connect to your computer from a mobile or tablet you must add your computers ip as
                     a secure address.
-
-                    1) Figure out what your ip address of your computer
-                    2) Open Chrome and go to <pre>chrome://flags</pre>
-                    3) Search for the flag "Insecure origins treated as secure"
-                    4) Enter <pre>http://[your ip]:1515</pre>
-
                 </Typography>
+                    <List sx={{listStyleType: 'disc', listStylePosition: 'inside'}}>
+                    <ListItem sx={{display: 'list-item'}}>
+                        Figure out what your ip address of your computer
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                        Open Chrome and go to <Typography component={'code'}>chrome://flags</Typography>
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                        Search for the flag "Insecure origins treated as secure"
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                        Enter <Typography component={'code'}>http://[your ip]:1515</Typography>
+                    </ListItem>
+                </List>
             </Stack>
         </Container>
     )
