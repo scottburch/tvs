@@ -28,7 +28,7 @@
   },
   "scripts": {
     "dev": "dtg-scripts dev --port 1616",
-    "build": "tar cvfz public/tvs-docker.tgz ../../docker && dtg-scripts build",
+    "build": "tar cvfz public/tvs-docker.tgz -C ../.. ./docker && dtg-scripts build",
     "serve": "ws --directory dist --spa index.html --port 1616",
     "test": "dtg-scripts test"
   },

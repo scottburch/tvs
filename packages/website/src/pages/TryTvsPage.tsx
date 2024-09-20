@@ -16,7 +16,7 @@ import {QRCodeSVG} from "qrcode.react";
 
 export const TryTvsPage: React.FC = () => {
     return (
-        <Container>
+        <Container sx={{pb: 4}}>
             <Stack spacing={2}>
                 <Typography variant={'h4'}>Try TVS</Typography>
                 <Typography variant={'body1'}>
