@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Routes} from "react-router";
-import {Header} from "./components/Header.jsx";
+import {Header} from "./components/header/Header.jsx";
 import {HomePage} from "./pages/HomePage.jsx";
 import {Box} from "@mui/material";
 import {MoreInfoPage} from "./pages/MoreInfoPage.jsx";
