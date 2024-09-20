@@ -17,6 +17,7 @@
     "@types/react-dom": "^18.3.0",
     "local-web-server": "^5.4.0",
     "lodash-es": "^4.17.21",
+    "qrcode.react": "^4.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.13.0",
@@ -27,7 +28,7 @@
   },
   "scripts": {
     "dev": "dtg-scripts dev --port 1616",
-    "build": "dtg-scripts build",
+    "build": "tar cvfz public/tvs-docker.tgz ../../docker && dtg-scripts build",
     "serve": "ws --directory dist --spa index.html --port 1616",
     "test": "dtg-scripts test"
   },
