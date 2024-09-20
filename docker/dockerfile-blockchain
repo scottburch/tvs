@@ -8,7 +8,7 @@ RUN unzip main.zip
 WORKDIR tvs-main
 
 # install cometBFT
-COPY ./packages/blockchain/cometBFT/linux_${ARCH}/cometbft /usr/local/bin
+COPY ./cometBFT/linux_${ARCH}/cometbft /usr/local/bin
 
 RUN yarn
 

@@ -1,28 +1,29 @@
 import React from "react";
 import {Box, Container, Stack, Typography} from "@mui/material";
 import {ItemWithTitle} from "../components/layout/ItemWithTitle.jsx";
+import {Link} from "react-router-dom";
 
 export const MoreInfoPage: React.FC = () => (
     <Container sx={{pb: '5rem'}}>
         <Stack spacing={2}>
             <Stack spacing={2}>
-                <Typography variant={'body1'} sx={{fontSize: '1.2rem', mb: '2rem'}}>
-                    Current voting systems rely on physical security to ensure integrity of elections. However, distrust
-                    in
-                    these centralized systems is growing. This is no way to run an election. Distrust in the integrity
-                    is
-                    driving a lot of the division seen in societies around the world.
+                <Typography variant={'body1'}>
+                    Current voting systems rely on honesty and physical security to ensure integrity of elections.
+                    However, distrust in these centralized systems is growing. This is no way to run an election. Distrust in the integrity
+                    is driving a lot of the division seen in societies around the world.
                 </Typography>
-                <Typography variant={'body1'} sx={{fontSize: '1.2rem'}}>
+                <Typography variant={'body1'}>
                     Blockchain has been regarded as too difficult to setup, run or operate in the past, for both the
                     administrators
                     and the end users. However, we have developed a new blockchain framework that makes it easy by
                     providing
                     the same interface users are familiar with already. With a simple name and password, or QR code and
                     password,
-                    people can securely vote on the phone, computer or tablet. They can obviously vote by mail or in a
-                    polling place
-                    just as they do now as well.
+                    people can securely vote on mobile, computer or tablet. They can still vote by mail or in a
+                    polling place just as they do now as well.
+                </Typography>
+                <Typography variant={'body1'}>
+                    If you need to know more about blockchain, <Link to={'/why-blockchain'}>click here</Link>
                 </Typography>
             </Stack>
 
@@ -57,7 +58,7 @@ export const MoreInfoPage: React.FC = () => (
                 </Typography>
             </ItemWithTitle>
 
-            <Typography variant={'h4'}>How does it work?</Typography>
+            <Typography variant={'h5'}>How does it work?</Typography>
             <Box>
                 The system is defined by some basic roles:
                 <ul>
@@ -75,7 +76,7 @@ export const MoreInfoPage: React.FC = () => (
             </ItemWithTitle>
 
             <ItemWithTitle title={'Key Maker'}>
-                <Typography>
+                <Box>
                     Key makers can create encrypted keys for voters and vote counters in the form of a string of
                     characters
                     and a password.
@@ -83,17 +84,17 @@ export const MoreInfoPage: React.FC = () => (
                     counter
                     provides
                     the password, then the key maker does not know what the key is, and can not use it.
-                </Typography>
-                <Typography>
+                </Box>
+                <Box>
                     When a keymaker creates a key for a voter or vote counter, their public id is recorded in a
                     table with the id of the voter or vote counter they created.  This is what provides
                     accountability in the system.  Again, no actual identifying information is stored here, only an
                     anonymous, automatically generated id.
-                </Typography>
-                <Typography>
+                </Box>
+                <Box>
                     The encryption employed by the system is the same encryption methods used by the most popular
                     password managers.
-                </Typography>
+                </Box>
             </ItemWithTitle>
 
             <ItemWithTitle title={'Voter'}>
