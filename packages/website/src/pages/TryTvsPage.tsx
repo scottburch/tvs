@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {
     Box,
     Button,
-    Container,
+    Container, List, ListItem, ListItemText,
     Stack,
     Table,
     TableBody,
@@ -16,7 +16,7 @@ import {QRCodeSVG} from "qrcode.react";
 
 export const TryTvsPage: React.FC = () => {
     return (
-        <Container sx={{pb: 4}}>
+        <Container sx={{pb: 20}}>
             <Stack spacing={2}>
                 <Typography variant={'h4'}>Try TVS</Typography>
                 <Typography variant={'body1'}>
@@ -74,22 +74,42 @@ export const TryTvsPage: React.FC = () => {
                 <Typography variant={'h5'}>
                     To run
                 </Typography>
-                <ul>
-                    <li>If you do not have it already, install docker. <a href={'https://docs.docker.com/engine/install'}>https://docs.docker.com/engine/install</a> </li>
-                    <li>Unpack the tvs-docker.tgz file</li>
-                    <li>
-                        In a terminal type: <code>docker compose build --build-arg ARCH=amd64</code>
-                        <Typography variant={'subtitle1'}>If you are on a ARM based system (like the Mac M series), replace "amd64" with "arm64"</Typography>
-                    </li>
-                    <li>
-                        When that completes (which might take a while), type: <code>docker compose up</code>
-                    </li>
-                </ul>
-                <Typography>You should now have a running TVS blockchain.  Have fun!</Typography>
+
+                <List sx={{listStyleType: 'disc', listStylePosition: 'inside'}}>
+                    <ListItem sx={{display: 'list-item'}}>
+                        If you do not have it already, install docker. <a href={'https://docs.docker.com/engine/install'}>https://docs.docker.com/engine/install</a>
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                        Unpack the tvs-docker.tgz file
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                            In a terminal type: <code>docker compose build --build-arg ARCH=amd64</code>
+                            <Typography variant={'subtitle2'}>If you are on a ARM based system (like the Mac M series), replace "amd64" with "arm64"</Typography>
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                            When that completes (which might take a while), type: <code>docker compose up</code>
+                    </ListItem>
+                    <ListItem sx={{display: 'list-item'}}>
+                            Go to url: <a href={'http://localhost:1515'}>http://localhost:1515</a>
+                    </ListItem>
+                </List>
+
+                <Typography>You should now have a running TVS blockchain. Have fun!</Typography>
+
+                <Typography variant={'h5'}>How to test from mobile platforms using Chrome/Brave</Typography>
+                <Typography variant={'body1'}>
+                    Since TVS uses encryption, the application will not run in a non-secure context (http vs https).
+                    In order to connect to your computer from a mobile or tablet you must add your computers ip as
+                    a secure address.
+
+                    1) Figure out what your ip address of your computer
+                    2) Open Chrome and go to <pre>chrome://flags</pre>
+                    3) Search for the flag "Insecure origins treated as secure"
+                    4) Enter <pre>http://[your ip]:1515</pre>
+
+                </Typography>
             </Stack>
         </Container>
-
-
     )
 }
 
