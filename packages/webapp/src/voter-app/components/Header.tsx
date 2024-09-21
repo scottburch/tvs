@@ -1,5 +1,5 @@
 import React from "react";
-import {AppBar, Box, Stack} from "@mui/material";
+import {AppBar, Stack} from "@mui/material";
 import {HeaderTabs} from "./HeaderTabs.jsx";
 
 export const Header: React.FC = () => (

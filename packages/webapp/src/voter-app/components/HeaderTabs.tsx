@@ -55,8 +55,7 @@ const MenuOptions: React.FC = () => {
     const [client] = useClient();
     return (
         <>
-            {/*<MenuOption to={'/vote'}>Vote</MenuOption>*/}
-            {/*{client.pubKey ? <MenuOption to={'/my-votes'}>My Votes</MenuOption> : null}*/}
+            <MenuOption to={'/vote/menu'}>Main Menu</MenuOption>
         </>
     );
 };
