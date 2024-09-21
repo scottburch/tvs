@@ -28,7 +28,7 @@ export const MoreInfoPage: React.FC = () => (
             </Stack>
 
 
-            <ItemWithTitle title={'What makes this system different?'}>
+            <ItemWithTitle title={'What makes TVS different?'}>
                 <Typography variant={'body1'} sx={{mb: '1.5'}}>
                     Voting will be conducted on a public blockchain. This means that votes are public and can be
                     verified by anyone.
@@ -43,7 +43,7 @@ export const MoreInfoPage: React.FC = () => (
 
             <ItemWithTitle title={'What happens if there is a problem?'}>
                 <Typography>
-                    The system has built in ways to trace who issued keys to voters or vote counters so
+                    TVS was built in ways to trace who issued keys to voters or vote counters so
                     investigations can
                     be carried out immediately. Automated systems could be built to raise alarms by voting
                     integrity
@@ -51,7 +51,7 @@ export const MoreInfoPage: React.FC = () => (
                     They can even do some preliminary investigation themselves.
                 </Typography>
                 <Typography>
-                    Of course, the system will not store names or identifying information. That will be the
+                    Of course, TVS will not store names or identifying information. That will be the
                     responsibility
                     of a private database. This is only a companion to existing systems to provide transparent
                     voting.
@@ -60,7 +60,7 @@ export const MoreInfoPage: React.FC = () => (
 
             <Typography variant={'h5'}>How does it work?</Typography>
             <Box>
-                The system is defined by some basic roles:
+                TVS is defined by some basic roles:
                 <ul>
                     <li>Administrator</li>
                     <li>Key Maker</li>
