@@ -11,31 +11,34 @@ import {VoteItemPage} from "./pages/VoteItemPage.jsx";
 import {RaceResultsPage} from "./pages/RaceResultsPage.jsx";
 
 export const VoterMain = () => {
+
+
+    return (
+        <WithClient url={`${location.protocol}//${location.host}/api`}>
+            <AuthCheck/>
+            <Header/>
+            <Container sx={{pt: '50px'}}>
+                <Routes>
+                    <Route path="/vote/auth/*" element={<VoterAuthPage/>}/>
+                    <Route path="/vote/menu" element={<MenuPage/>}/>
+                    <Route path="/vote/my-votes" element={<MyVotesPage/>}/>
+                    <Route path="/vote/item/:itemNo" element={<VoteItemPage/>}/>
+                    <Route path="/vote/results" element={<RaceResultsPage/>}/>
+                </Routes>
+            </Container>
+        </WithClient>
+    );
+};
+
+const AuthCheck = () => {
     const [client] = useClient();
     const loc = useLocation();
     const nav = useNavigate();
 
     useEffect(() => {
         !client?.pubKey && loc.pathname !== '/vote/auth' && nav('/vote/auth');
-    }, [client])
-
-
-    return (
-        <Box>
-            <WithClient url={`${location.protocol}//${location.host}/api`}>
-                <Header/>
-                <Container sx={{pt: '50px'}}>
-                    <Routes>
-                        <Route path="/vote/auth/*" element={<VoterAuthPage/>}/>
-                        <Route path="/vote/menu" element={<MenuPage/>}/>
-                        <Route path="/vote/my-votes" element={<MyVotesPage/>}/>
-                        <Route path="/vote/item/:itemNo" element={<VoteItemPage/>}/>
-                        <Route path="/vote/results" element={<RaceResultsPage/>}/>
-                    </Routes>
-                </Container>
-            </WithClient>
-        </Box>
-    );
-}
+    }, [client, loc.pathname])
+    return null
+};
 
 
