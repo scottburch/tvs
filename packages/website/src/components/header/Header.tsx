@@ -17,6 +17,7 @@ export const Header: React.FC = () => {
                     <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/try-tvs'}>Try TVS</Link></Typography>
                     <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/more-info'}>more info</Link></Typography>
                     <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/'}>home</Link></Typography>
+                    <Typography variant={'button'}><Link style={{lineHeight: '4rem', color: 'white', textDecoration: 'none'}} to={'/contact-us'}>contact us</Link></Typography>
                 </Box>
                 <Box sx={{pl: 2}}>
                     <a href={'https://github.com/scottburch/tvs'} target={'_blank'}><img src={githubLogo} style={{height: '60%', position: 'relative', top: '20%'}}/></a>
