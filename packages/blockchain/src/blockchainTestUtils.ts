@@ -60,8 +60,7 @@ export const sendTestTx = (tx: UnsignedTransaction) =>
         newTransaction(tx),
         testApiClient()
     ]).pipe(
-        switchMap(([tx, client]) => of(undefined).pipe(
-            switchMap(() => signTx(tx, client.keys)),
+        switchMap(([tx, client]) => signTx(tx, client.keys).pipe(
             switchMap(tx => sendTx(client, tx)),
             map(result => ({result, client, tx}))
         ))

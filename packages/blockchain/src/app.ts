@@ -174,9 +174,7 @@ const cmdProcessorFactory = (app: App) => () => {
 };
 
 const processCmd = (app: App, cmd: keyof Request, data: any) =>
-    of(undefined).pipe(
-        switchMap(() => commandProcessors[cmd](app, data)),
-    );
+        commandProcessors[cmd](app, data);
 
 const infoCmdProcessor: CommandProcessor = (app, data: RequestInfo) =>
     of({
@@ -223,8 +221,7 @@ const processProposalCmdProcessor: CommandProcessor = (app, data: RequestProcess
 
 const finalizeBlockCmdProcessor: CommandProcessor = (app, req: RequestFinalizeBlock) => {
     return from(req.txs).pipe(
-        concatMap(tx => of(undefined).pipe(
-            switchMap(() => processMsgs(app, deserializeTx(tx), 'finalize')),
+        concatMap(tx => processMsgs(app, deserializeTx(tx), 'finalize').pipe(
             map(result => ({} as Partial<ExecTxResult>)),
             catchError((err: MsgProcessorError) => of(err)),
         )),
@@ -371,8 +368,7 @@ const commandProcessors: Record<keyof Request, CommandProcessor> = {
 
 };
 
-const prepResponse = <T>(cmd: keyof Response, data: T) => of(undefined).pipe(
-    map(() => ({[cmd]: data})),
+const prepResponse = <T>(cmd: keyof Response, data: T) => of({[cmd]: data}).pipe(
     map(response => Response.fromJSON(response)),
     map(response => Response.encode(response).finish())
 );

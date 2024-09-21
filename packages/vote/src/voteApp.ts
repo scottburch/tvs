@@ -171,14 +171,12 @@ const getVotesByRaceQueryHandler: QueryHandler<{race: string}> = ({app, data}) =
     )
 
 const createKeyMakerMsgHandler: MsgHandler<KeyMaker> = ({app, msg, tx}) =>
-    of(undefined).pipe(
-        switchMap(() => checkCanCreateKeyMaker(app, msg, tx)),
+    checkCanCreateKeyMaker(app, msg, tx).pipe(
         switchMap(() => put(app.appStore, `${STORE_PREFIX.KEY_MAKER}-${msg.data.pubKey}`, JSON.stringify(msg.data)))
     );
 
 const checkCanCreateKeyMaker = (app: App, msg: Message<KeyMaker>, tx: Transaction) =>
-    of(undefined).pipe(
-        switchMap(() => get(app.appStore, 'admin')),
+    get(app.appStore, 'admin').pipe(
         map(admin => JSON.parse(admin)),
         switchMap(admin => tx.signer === admin.pubKey ? of(undefined) : of(undefined).pipe(
             switchMap(() => get(app.appStore, `${STORE_PREFIX.KEY_MAKER}-${tx.signer}`)),

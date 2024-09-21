@@ -21,8 +21,7 @@ export const WithClient: React.FC<PropsWithChildren<{url: string}>> = ({url, chi
 
     const roLogin = (pubKey: SerializedPubKey) =>
         of(undefined).pipe(
-            tap(() => setClient({pubKey, url} as ApiClient)),
-            map(() => undefined)
+            tap(() => setClient({pubKey, url} as ApiClient))
         );
 
     const login = (privKey: SerializedPrivKey) =>
@@ -32,8 +31,7 @@ export const WithClient: React.FC<PropsWithChildren<{url: string}>> = ({url, chi
         );
 
     const logout = () => of(undefined).pipe(
-        map(() => setClient({url} as ApiClient)),
-        map(() => undefined)
+        tap(() => setClient({url} as ApiClient))
     );
 
     return (
