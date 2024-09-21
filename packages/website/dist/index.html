@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YK9RQV14KP"></script>
+    <script>
+      if(!/localhost/.test(window.location.host) && !/127.0.0.1/.test(window.location.host) && !/192.168/.test(window.location.host)) {
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-YK9RQV14KP');
+      }
+    </script>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
