@@ -62,8 +62,9 @@ of(undefined).pipe(
         switchMap(() => addVoter(keyMakerClient, voterClient.pubKey)),
         switchMap(() => addAuditor(keyMakerClient, auditorClient.pubKey)),
         switchMap(() => addVoteCounter(keyMakerClient, counterClient.pubKey)),
-        switchMap(() => addRace(adminClient, {name: 'dog-catcher', candidates: ['Todd', 'Scott']})),
-        switchMap(() => addRace(adminClient, {name: 'doorman', candidates: ['Jim', 'Jean']}))
+        switchMap(() => addRace(adminClient, {name: 'dog-catcher', candidates: ['Todd', 'Scott', 'Jim']})),
+        switchMap(() => addRace(adminClient, {name: 'floor-sweeper', candidates: ['Jean', 'Timmy', 'John']})),
+        switchMap(() => addRace(adminClient, {name: 'night-watchman', candidates: ['Joan', 'Karen', 'Sally']}))
     ))
 ).subscribe();
 
