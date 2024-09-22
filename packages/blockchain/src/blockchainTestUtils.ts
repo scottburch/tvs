@@ -14,7 +14,7 @@ import {fs} from 'zx'
 import {waitFor} from "poll-until-promise";
 import psList from "ps-list";
 import {AppConfig} from "./index.js";
-import {generateNewKeyPair, serializeKey} from "@tvs/crypto";
+import {generateNewKeyPair, SerializedPrivKey, serializeKey} from "@tvs/crypto";
 import {getDir} from "./utils.js";
 
 
@@ -50,10 +50,12 @@ export const broadcastTestTx = (tx: UnsignedTransaction) =>
         switchMap(({client, tx}) => broadcastTx(client, tx).pipe(map(({hash}) => ({hash, client})))),
     );
 
-export const testApiClient = () => generateNewKeyPair().pipe(
-    switchMap(keys => serializeKey(keys.privKey)),
-    switchMap(privKey => newApiClient({url: 'http://localhost:1234', privKey}))
-);
+export const testApiClient = (privKey: SerializedPrivKey = '' as SerializedPrivKey) =>
+    (privKey ? of(privKey) : generateNewKeyPair().pipe(
+        switchMap(keys => serializeKey(keys.privKey))
+    )).pipe(
+        switchMap(privKey => newApiClient({url: 'http://localhost:1234', privKey}))
+    );
 
 export const sendTestTx = (tx: UnsignedTransaction) =>
     combineLatest([

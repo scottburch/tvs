@@ -1,9 +1,22 @@
 import {combineLatest, from, last, map, mergeMap, of, range, switchMap, toArray} from "rxjs";
 import {testApiClient} from "@tvs/blockchain";
 import {addAdmin, addAuditor, addKeyMaker, addVoter, vote} from "@tvs/vote";
-import {encryptPrivKey, serializeKey} from "@tvs/crypto";
+import {encryptPrivKey, SerializedPrivKey, serializeKey} from "@tvs/crypto";
 import {addRace} from "@tvs/vote";
-import * as test from "node:test";
+
+export const noVoterSetup = () =>
+    combineLatest([
+        testApiClient('QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=' as SerializedPrivKey),
+        testApiClient('YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey)
+    ]).pipe(
+        switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
+            switchMap(() => addAdmin(adminClient)),
+            switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
+            switchMap(() => serializeKey(keyMakerClient.keys.privKey)),
+            map(keyMakerPrivKey => ({keyMakerClient, adminClient, keyMakerPrivKey}))
+        ))
+    );
+
 
 export const singleVoterSetup = () =>
     combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()]).pipe(
@@ -15,7 +28,7 @@ export const singleVoterSetup = () =>
                 addAuditor(keyMakerClient, auditorClient.pubKey)
             ])),
             switchMap(() => serializeKey(voterClient.keys.privKey)),
-            switchMap(privKey=> encryptPrivKey('12345', privKey)),
+            switchMap(privKey => encryptPrivKey('12345', privKey)),
             map(privKey => ({keyMakerClient, adminClient, auditorClient, client: voterClient, privKey}))
         ))
     );
