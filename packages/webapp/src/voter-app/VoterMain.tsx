@@ -19,11 +19,11 @@ export const VoterMain = () => {
             <Header/>
             <Container sx={{pt: '50px'}}>
                 <Routes>
-                    <Route path="/vote/auth/*" element={<VoterAuthPage/>}/>
-                    <Route path="/vote/menu" element={<MenuPage/>}/>
-                    <Route path="/vote/my-votes" element={<MyVotesPage/>}/>
-                    <Route path="/vote/item/:itemNo" element={<VoteItemPage/>}/>
-                    <Route path="/vote/results" element={<RaceResultsPage/>}/>
+                    <Route path="/auth/*" element={<VoterAuthPage/>}/>
+                    <Route path="/menu" element={<MenuPage/>}/>
+                    <Route path="/my-votes" element={<MyVotesPage/>}/>
+                    <Route path="/item/:itemNo" element={<VoteItemPage/>}/>
+                    <Route path="/results" element={<RaceResultsPage/>}/>
                 </Routes>
             </Container>
         </WithClient>
