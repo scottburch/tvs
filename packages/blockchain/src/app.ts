@@ -167,7 +167,7 @@ const cmdProcessorFactory = (app: App) => () => {
     const sub = new Subject<Uint8Array>();
     const resp = sub.pipe(
         concatMap(data => bytesToRequest(data)),
-        tap(({cmd, data}) => console.log('processing cmd', cmd, data)),
+//        tap(({cmd, data}) => console.log('processing cmd', cmd, data)),
         concatMap(({cmd, data}) => processCmd(app, cmd, data)),
     );
     return {sub, resp};
