@@ -7,6 +7,7 @@ services:
       args:
         - NODE_NAME=root
         - ARCH=arm64
+        - API_PORT=1234
 
   testnet-right:
     container_name: testnet-right
@@ -18,6 +19,28 @@ services:
         - NODE_NAME=right
         - ARCH=arm64
         - API_PORT=1235
+
+  testnet-left:
+    container_name: testnet-left
+    network_mode: service:testnet-root
+    build:
+      context: .
+      dockerfile: dockerfile-testnet-node
+      args:
+        - NODE_NAME=left
+        - ARCH=arm64
+        - API_PORT=1236
+
+  testnet-center:
+    container_name: testnet-center
+    network_mode: service:testnet-root
+    build:
+      context: .
+      dockerfile: dockerfile-testnet-node
+      args:
+        - NODE_NAME=center
+        - ARCH=arm64
+        - API_PORT=1237
 
 
 #  webapp:
