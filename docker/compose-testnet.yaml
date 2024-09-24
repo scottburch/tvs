@@ -17,6 +17,7 @@ services:
       args:
         - NODE_NAME=right
         - ARCH=arm64
+        - API_PORT=1235
 
 
 #  webapp:

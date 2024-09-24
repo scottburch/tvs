@@ -1,6 +1,6 @@
-import {newApiClient, startCleanValidator} from "@tvs/blockchain";
+import {newApiClient} from "@tvs/blockchain";
 import {startVoteApp} from "./voteApp.js";
-import {combineLatest, filter, Observable, of, switchMap, tap} from "rxjs";
+import {combineLatest, filter, of, switchMap, tap} from "rxjs";
 import {encryptPrivKey, SerializedPrivKey} from "@tvs/crypto";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoteCounter, addVoter} from "./vote-client.js";
 import {startTestnetNode} from "@tvs/blockchain";
@@ -8,9 +8,15 @@ import {startTestnetNode} from "@tvs/blockchain";
 import {program} from 'commander'
     program
         .argument('<nodeName>')
+        .option( '--api-port <apiPort>')
     program.parse();
+
 const nodeName = program.args[0];
+const apiPort = program.getOptionValue('apiPort');
+
 console.log('Starting node: ', nodeName);
+console.log('--------------');
+console.log('api-port: ', apiPort);
 
 of(undefined).pipe(
     switchMap(() => combineLatest([
@@ -31,7 +37,7 @@ of(undefined).pipe(
         console.log('password', '12345')
         console.log('\n\n')
     }),
-    switchMap(() => startTestnetNode({nodeName: nodeName}, startVoteApp)),
+    switchMap(() => startTestnetNode({nodeName: nodeName, apiPort}, startVoteApp)),
     filter(() => nodeName === 'root'),
     switchMap(() => combineLatest([
         newApiClient({
