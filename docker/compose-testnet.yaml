@@ -1,0 +1,17 @@
+services:
+  testnet-root:
+    container_name: testnet-root
+    network_mode: service:webapp
+    build:
+      context: .
+      dockerfile: dockerfile-testnet-node
+      args:
+        - NODE_NAME=root
+
+#  webapp:
+#    container_name: webapp
+#    ports:
+#      - 1515:1515
+#    build:
+#      context: .
+#      dockerfile: dockerfile-webapp

@@ -4,11 +4,12 @@
   "type": "module",
   "private": true,
   "dependencies": {
+    "@tvs/blockchain": "^1.0.0",
     "@types/chai": "^4.3.17",
     "@types/mocha": "^10.0.7",
     "@types/node": "^22.3.0",
-    "@tvs/blockchain": "^1.0.0",
     "chai": "^5.1.1",
+    "commander": "^12.1.0",
     "mocha": "^10.7.3",
     "rxjs": "^7.8.1",
     "ts-node": "^10.9.2",
@@ -22,6 +23,7 @@
   "scripts": {
     "build": "rm -rf lib && tsc",
     "start-demo-server": "node ./lib/startDemoVoteNode.js",
+    "start-demo-testnet": "npx tsx src/startDemoVoteTestnet.ts",
     "test": "mocha src/**/*.spec.ts"
   },
   "engines": {

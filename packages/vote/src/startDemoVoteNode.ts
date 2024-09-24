@@ -5,15 +5,6 @@ import {encryptPrivKey, SerializedPrivKey} from "@tvs/crypto";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoteCounter, addVoter} from "./vote-client.js";
 
 
-// testApiClient().pipe(
-//     switchMap(client => of(undefined).pipe(
-//         switchMap(() => serializeKey(client.keys.privKey)),
-//         tap(privKey => console.log('privKey', privKey)),
-//         switchMap(privKey => encryptPrivKey('12345', privKey)),
-//         tap(key => console.log('login', key))
-//     ))
-// ).subscribe();
-
 of(undefined).pipe(
     switchMap(() => combineLatest([
         encryptPrivKey('12345', 'QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=' as SerializedPrivKey),

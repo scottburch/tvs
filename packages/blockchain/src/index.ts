@@ -6,7 +6,7 @@ export {newApiClient, sendTx, getTxByHash, sendQuery, waitForTx} from './api-cli
 export type {ApiClient, ApiClientOpts} from './api-client/api-client.js'
 export {txByHash, broadcastTx, tvsClient, query} from './rpc-client.js'
 export type {TvsClient, Query, BroadcastTxResponse} from './rpc-client.js'
-export {waitForCometDown, startCleanValidator, broadcastTestTx, testApiClient, sendTestTx, sendTestQuery} from './blockchainTestUtils.js'
+export {waitForCometDown, startCleanValidator,startTestnetNode, broadcastTestTx, testApiClient, sendTestTx, sendTestQuery} from './blockchainTestUtils.js'
 export {get, put, exists, findPrefix} from './appStore.js'
 export type {AppStore} from './appStore.js'
 export {newTransaction, deserializeTx, serializeTx, signTx, verifyTx} from './Tx.js'

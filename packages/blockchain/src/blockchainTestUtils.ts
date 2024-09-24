@@ -9,7 +9,7 @@ import {
     UnsignedTransaction,
     tvsClient
 } from "./index.js";
-import {combineLatest, firstValueFrom, from, map, of, switchMap} from "rxjs";
+import {combineLatest, firstValueFrom, from, map, mergeMap, of, switchMap} from "rxjs";
 import {fs} from 'zx'
 import {waitFor} from "poll-until-promise";
 import psList from "ps-list";
@@ -17,12 +17,31 @@ import {AppConfig} from "./index.js";
 import {generateNewKeyPair, SerializedPrivKey, serializeKey} from "@tvs/crypto";
 import {getDir} from "./utils.js";
 
+export type StartNodeOpts = Partial<AppConfig> & {
+    nodeName: string
+}
+
+export const startTestnetNode = (opts: StartNodeOpts, startAppFn: typeof startApp = startApp) =>
+    from(fs.rm(`${homedir()}/.tvs-testnet`, {recursive: true, force: true})).pipe(
+        switchMap(() => fs.promises.mkdir(`${homedir()}/.tvs-testnet`)),
+        map(() => getDir(import.meta.url)),
+        switchMap(dir => fs.promises.cp(`${dir}/../tvs-testnet/${opts.nodeName}`, `${homedir()}/.tvs-test`, {recursive: true})),
+        switchMap(() => startAppFn({
+            appVersion: 1,
+            version: '1.0.0',
+            home: `${homedir()}/.tvs-test`,
+            queryHandlers: {},
+            msgHandlers: {},
+            ...opts
+        })),
+    );
+
 
 export const startCleanValidator = (config: Partial<AppConfig> = {}, startAppFn: typeof startApp = startApp) =>
     from(fs.rm(`${homedir()}/.tvs-test`, {recursive: true, force: true})).pipe(
         switchMap(() => fs.promises.mkdir(`${homedir()}/.tvs-test`)),
         map(() => getDir(import.meta.url)),
-        switchMap(dir => fs.promises.cp(`${dir}/../tvs-template`, `${homedir()}/.tvs-test`, {recursive: true})),
+        switchMap(dir => fs.promises.cp(`${dir}/../tvs-standalone`, `${homedir()}/.tvs-test`, {recursive: true})),
         switchMap(() => startAppFn({
             appVersion: 1,
             version: '1.0.0',

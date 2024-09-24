@@ -26,4 +26,3 @@ RUN yarn build
 
 WORKDIR ../vote
 ENTRYPOINT yarn start-demo-server
-#ENTRYPOINT cat /dev/random > /dev/null
