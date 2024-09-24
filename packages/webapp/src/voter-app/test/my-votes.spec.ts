@@ -10,7 +10,7 @@ describe('my votes page', () => {
         firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
             switchMap(() => combineLatest([
                 singleVoterSetup(),
-                openBrowser({url: 'http://localhost:1515'})
+                openBrowser({url: 'http://localhost:1515/vote'})
             ])),
             switchMap(([{privKey, client, adminClient}, page]) => of(undefined).pipe(
                 switchMap(() => combineLatest([
@@ -37,7 +37,7 @@ describe('my votes page', () => {
         firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
             switchMap(() => combineLatest([
                 singleVoterSetup(),
-                openBrowser({url: 'http://localhost:1515'})
+                openBrowser({url: 'http://localhost:1515/vote'})
             ])),
             switchMap(([{privKey, client, adminClient, auditorClient, keyMakerClient}, page]) => of(undefined).pipe(
                 switchMap(() => combineLatest([

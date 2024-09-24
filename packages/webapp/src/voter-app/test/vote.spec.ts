@@ -15,7 +15,7 @@ describe('voting', () => {
             switchMap(({privKey, client, adminClient}) => combineLatest([
                 of(client),
                 of(privKey),
-                openBrowser({url: 'http://localhost:1515'}),
+                openBrowser({url: 'http://localhost:1515/vote'}),
                 of(adminClient)
             ])),
             switchMap(([client, privKey, page, adminClient]) => of(undefined).pipe(

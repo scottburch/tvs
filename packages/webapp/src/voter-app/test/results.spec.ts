@@ -12,7 +12,7 @@ describe("race results", () => {
             switchMap(({privKey, client}) => combineLatest([
                 of(client),
                 of(privKey),
-                openBrowser({url: 'http://localhost:1515'})
+                openBrowser({url: 'http://localhost:1515/vote'})
             ])),
             switchMap(([client, privKey, page]) => of(undefined).pipe(
                 switchMap(() => doLogin(page, privKey)),
