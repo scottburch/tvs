@@ -1,8 +1,7 @@
 services:
   testnet-root:
     container_name: testnet-root
-    networks:
-      common:
+    network_mode: host
 
     build:
       context: .
@@ -65,3 +64,5 @@ services:
 
 networks:
   common:
+    driver:
+      host

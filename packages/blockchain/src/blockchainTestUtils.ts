@@ -22,8 +22,8 @@ export type StartNodeOpts = Partial<AppConfig> & {
 }
 
 export const startTestnetNode = (opts: StartNodeOpts, startAppFn: typeof startApp = startApp) =>
-    from(fs.rm(`${homedir()}/.tvs-testnet`, {recursive: true, force: true})).pipe(
-        switchMap(() => fs.promises.mkdir(`${homedir()}/.tvs-testnet`)),
+    from(fs.rm(`${homedir()}/.tvs-test`, {recursive: true, force: true})).pipe(
+        switchMap(() => fs.promises.mkdir(`${homedir()}/.tvs-test`)),
         map(() => getDir(import.meta.url)),
         switchMap(dir => fs.promises.cp(`${dir}/../tvs-testnet/${opts.nodeName}`, `${homedir()}/.tvs-test`, {recursive: true})),
         switchMap(() => startAppFn({
