@@ -1,5 +1,5 @@
 services:
-  testnet-root:
+  root:
     container_name: testnet-root
     build:
       context: .
@@ -10,7 +10,7 @@ services:
         - API_PORT=1234
 
 
-  testnet-right:
+  right:
     container_name: testnet-right
     build:
       context: .
@@ -18,10 +18,10 @@ services:
       args:
         - NODE_NAME=right
         - ARCH=arm64
-        - API_PORT=1235
+        - API_PORT=1234
 
 
-  testnet-left:
+  left:
     container_name: testnet-left
     build:
       context: .
@@ -29,11 +29,10 @@ services:
       args:
         - NODE_NAME=left
         - ARCH=arm64
-        - API_PORT=1236
+        - API_PORT=1234
 
 
-  testnet-center:
-    hostname:
+  center:
     container_name: testnet-center
     build:
       context: .
@@ -41,7 +40,7 @@ services:
       args:
         - NODE_NAME=center
         - ARCH=arm64
-        - API_PORT=1237
+        - API_PORT=1234
 
 
 #  webapp:
