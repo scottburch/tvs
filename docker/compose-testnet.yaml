@@ -1,13 +1,23 @@
 services:
   testnet-root:
     container_name: testnet-root
-#    network_mode: service:webapp
     build:
       context: .
       dockerfile: dockerfile-testnet-node
       args:
         - NODE_NAME=root
         - ARCH=arm64
+
+  testnet-right:
+    container_name: testnet-right
+    network_mode: service:testnet-root
+    build:
+      context: .
+      dockerfile: dockerfile-testnet-node
+      args:
+        - NODE_NAME=right
+        - ARCH=arm64
+
 
 #  webapp:
 #    container_name: webapp
