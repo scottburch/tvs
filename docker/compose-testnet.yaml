@@ -1,6 +1,8 @@
 services:
   root:
     container_name: testnet-root
+    ports:
+      - 1515:1515
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -12,6 +14,8 @@ services:
 
   right:
     container_name: testnet-right
+    ports:
+      - 1516:1515
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -23,6 +27,8 @@ services:
 
   left:
     container_name: testnet-left
+    ports:
+      - 1517:1515
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -34,6 +40,8 @@ services:
 
   center:
     container_name: testnet-center
+    ports:
+      - 1518:1515
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -43,11 +51,30 @@ services:
         - API_PORT=1234
 
 
-#  webapp:
-#    container_name: webapp
-#    ports:
-#      - 1515:1515
-#    build:
-#      context: .
-#      dockerfile: dockerfile-webapp
+  webapp-root:
+    container_name: webapp-root
+    network_mode: service:root
+    build:
+      context: .
+      dockerfile: dockerfile-webapp
 
+  webapp-right:
+    container_name: webapp-right
+    network_mode: service:right
+    build:
+      context: .
+      dockerfile: dockerfile-webapp
+
+  webapp-left:
+    container_name: webapp-left
+    network_mode: service:left
+    build:
+      context: .
+      dockerfile: dockerfile-webapp
+
+  webapp-center:
+    container_name: webapp-center
+    network_mode: service:center
+    build:
+      context: .
+      dockerfile: dockerfile-webapp
