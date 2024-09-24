@@ -1,6 +1,8 @@
 services:
   testnet-root:
     container_name: testnet-root
+    ports:
+      - 1515:1515
 
     build:
       context: .
@@ -47,14 +49,12 @@ services:
         - API_PORT=1237
 
 
-#  webapp:
-#    container_name: webapp
-#    network_mode: service:testnet-root
-#    ports:
-#      - 1515:1515
-#
-#
-#    build:
-#      context: .
-#      dockerfile: dockerfile-webapp
+  webapp:
+    container_name: webapp
+    network_mode: service:testnet-root
+
+
+    build:
+      context: .
+      dockerfile: dockerfile-webapp
 
