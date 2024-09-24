@@ -3,7 +3,6 @@ services:
     container_name: testnet-root
     ports:
       - 1515:1515
-
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -12,10 +11,10 @@ services:
         - ARCH=arm64
         - API_PORT=1234
 
+
   testnet-right:
     container_name: testnet-right
     network_mode: service:testnet-root
-
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -24,10 +23,10 @@ services:
         - ARCH=arm64
         - API_PORT=1235
 
+
   testnet-left:
     container_name: testnet-left
     network_mode: service:testnet-root
-
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -36,10 +35,10 @@ services:
         - ARCH=arm64
         - API_PORT=1236
 
+
   testnet-center:
     container_name: testnet-center
     network_mode: service:testnet-root
-
     build:
       context: .
       dockerfile: dockerfile-testnet-node
@@ -52,8 +51,6 @@ services:
   webapp:
     container_name: webapp
     network_mode: service:testnet-root
-
-
     build:
       context: .
       dockerfile: dockerfile-webapp
