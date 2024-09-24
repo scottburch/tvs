@@ -28,4 +28,4 @@ WORKDIR ../vote
 RUN yarn build
 
 WORKDIR ../vote
-ENTRYPOINT yarn start-demo-server $NODE_NAME
+ENTRYPOINT yarn start-testnet-node $NODE_NAME

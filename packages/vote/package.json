@@ -23,7 +23,7 @@
   "scripts": {
     "build": "rm -rf lib && tsc",
     "start-demo-server": "node ./lib/startDemoVoteNode.js",
-    "start-demo-testnet": "npx tsx src/startDemoVoteTestnet.ts",
+    "start-testnet-node": "npx tsx src/startTestnetVoteNode.ts",
     "test": "mocha src/**/*.spec.ts"
   },
   "engines": {
