@@ -33,9 +33,7 @@
     "node": ">=19"
   },
   "mocha": {
-    "require": "ts-node/register",
-    "loader": "ts-node/esm",
-    "experimental-specifier-resolution": "node",
+    "require": "tsx",
     "bail": true,
     "async-only": true
   },
