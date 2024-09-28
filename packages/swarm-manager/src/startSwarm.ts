@@ -29,7 +29,6 @@ const setChainId = (config: SwarmConfig) =>
             switchMap(() => fs.readFile(getBaseDir(`${n.name}/config/genesis.json`))),
             map(json => JSON.parse(json.toString())),
             map(genesis => ({...genesis, chain_id: config.chainId})),
-            tap(x => x)
         ))
     )
 
