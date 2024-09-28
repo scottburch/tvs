@@ -10,10 +10,8 @@
     "@types/orderedmap": "^2.0.0",
     "chai": "^5.1.1",
     "mocha": "^10.7.3",
-    "orderedmap": "^2.1.1",
     "rxjs": "^7.8.1",
     "ts-node": "^10.9.2",
-    "tsx": "^4.19.1",
     "typescript": "^5.5.4"
   },
   "exports": {
@@ -28,7 +26,8 @@
     "node": ">=22"
   },
   "mocha": {
-    "require": "tsx",
+    "require": "ts-node/register",
+    "loader": "ts-node/esm",
     "bail": true,
     "timeout": 2000,
     "async-only": true

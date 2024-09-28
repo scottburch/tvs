@@ -1,5 +1,6 @@
-import {combineLatestWith, defaultIfEmpty, filter, from, last, map, merge, mergeMap, mergeScan, of, raceWith, scan, switchMap, tap, toArray} from "rxjs";
-import OrderedMap from "orderedmap";
+import {defaultIfEmpty, filter, from, last, map, merge, mergeScan, of, scan, switchMap} from "rxjs";
+import {newOrderedMap, add, get, OrderedMap} from "./OrderedMap.js";
+
 
 export type ParsedToml = OrderedMap;
 
@@ -11,9 +12,11 @@ export const parseToml = (toml: string) => of(toml).pipe(
         return merge(
             of(undefined).pipe(
                 filter(() => /^[a-zA-Z_[0-9]* =/.test(line)),
-                map(() => line.split(' = ')[0].trim()),
-                map(key => prefix ? [prefix, key].join('.') : key),
-                map(key => ({prefix, key, value: JSON.parse(line.split(' = ')[1])}))
+                map(() => line.split(' = ')),
+                map(([key, value]) => ([key.trim(), value.trim()])),
+                map(([key, value]) => ([key, value.replace(/(.*), ]/, '$1]')])),
+                map(([key, value]) => ([prefix ? [prefix, key].join('.') : key, value])),
+                map(([key, value]) => ({prefix, key, value: JSON.parse(value)}))
             ),
             of(undefined).pipe(
                 filter(() => /^\[.*]$/.test(line)),
@@ -25,13 +28,13 @@ export const parseToml = (toml: string) => of(toml).pipe(
         )
     }, {prefix: ''} as { prefix: string, key: string, value: any }),
     scan((toml, item) => {
-        return toml.addToEnd(item.key, item.value)
-    }, OrderedMap.from<any>({})),
+        return add(toml, item.key, item.value)
+    }, newOrderedMap()),
     last(),
 );
 
-export const stringifyToml = (toml: ParsedToml) => from(Object.entries(toml.toObject())).pipe(
-    mergeScan((out, [key, value]) => {
+export const stringifyToml = (toml: ParsedToml) => from(toml.entries).pipe(
+    mergeScan((out, {key, value}) => {
         return merge(
             of(it).pipe(
                 filter(it => !key.startsWith('#') && !key.startsWith('[')),
@@ -41,10 +44,12 @@ export const stringifyToml = (toml: ParsedToml) => from(Object.entries(toml.toOb
         ).pipe(
             defaultIfEmpty(`${out}${out ? '\n' : ''}${value}`),
         )
-
     }, ''),
     last()
-)
+);
+
+export const tomlSet = (toml: ParsedToml, key: string, value: any) => add(toml, key, value);
+export const tomlGet = (toml: ParsedToml, key: string) => get(toml, key)
 
 
 

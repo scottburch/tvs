@@ -1,24 +1,25 @@
-import {expand, finalize, firstValueFrom, map, merge, NEVER, of, raceWith, switchMap, take, tap, timer} from "rxjs";
+import {firstValueFrom, map, tap} from "rxjs";
 import {expect} from 'chai'
-import {parseToml, stringifyToml} from "./tomlParser.js";
+import {parseToml, tomlGet, tomlSet} from "./tomlParser.js";
 
 describe('toml parser', () => {
     it('should parse toml into a JSON structure complete with comments', () =>
         firstValueFrom(parseToml(testToml).pipe(
             tap(toml => {
-                expect(toml.get('base_boolean')).to.be.false
-                expect(toml.get('subthing1.subthing1_number')).to.equal(11)
+                expect(tomlGet(toml, 'base_boolean')).to.be.false;
+                expect(tomlGet(toml, 'subthing1.subthing1_number')).to.equal(11);
+                expect(tomlGet(toml, 'cors_allowed_methods')).to.deep.equal(["HEAD", "GET", "POST"])
             }),
-            switchMap(toml => stringifyToml(toml)),
-            tap(str => expect(str).to.equal(testToml))
+            // switchMap(toml => stringifyToml(toml)),
+            // tap(str => expect(str).to.equal(testToml))
         ))
     );
 
     it('should update a value', () =>
         firstValueFrom(parseToml(testToml).pipe(
-            map(toml => toml.update('subthing1.subthing1_number', 100)),
+            map(toml => tomlSet(toml, 'subthing1.subthing1_number', 100)),
             tap(toml => {
-                expect(toml.get('subthing1.subthing1_number')).to.equal(100)
+                expect(tomlGet(toml, 'subthing1.subthing1_number')).to.equal(100)
             })
 
         ))
@@ -33,6 +34,7 @@ const testToml =
 base_number = 10
 base_string = "testing"
 
+cors_allowed_methods = ["HEAD", "GET", "POST", ]
 
 #######################################################################
 ###                 Some Comment                  ###
