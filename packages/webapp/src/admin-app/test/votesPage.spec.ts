@@ -1,6 +1,6 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {startCleanValidator, waitForCometDown} from "@tvs/blockchain";
-import {readVote, startVoteApp} from "@tvs/vote";
+import {waitForCometDown} from "@tvs/blockchain";
+import {readVote, startVoteSwarm} from "@tvs/vote";
 import {openBrowser} from "@end-game/utils/openBrowser";
 import {auditReadySetup} from "./helpers/setupHelpers.js";
 import {doAdminLogin} from "./helpers/loginHelper.js";
@@ -9,7 +9,7 @@ import {omit} from "lodash-es";
 
 describe('votes page', () => {
     it('should display votes', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([
                 auditReadySetup(),
                 openBrowser({url: 'http://localhost:1515/admin'})

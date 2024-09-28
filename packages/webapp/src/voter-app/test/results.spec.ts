@@ -1,13 +1,13 @@
-import {catchError, combineLatest, delay, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {startCleanValidator, waitForCometDown} from "@tvs/blockchain";
-import {startVoteApp} from "@tvs/vote";
+import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
+import {waitForCometDown} from "@tvs/blockchain";
+import {startVoteSwarm} from "@tvs/vote";
 import {multiVoterSetup} from "./helpers/setupHelpers.js";
 import {openBrowser} from "@end-game/utils/openBrowser";
 import {doLogin} from "./helpers/loginHelper.js";
 
 describe("race results", () => {
     it('should display race results', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => multiVoterSetup()),
             switchMap(({privKey, client}) => combineLatest([
                 of(client),

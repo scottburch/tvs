@@ -1,12 +1,12 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {startCleanValidator, testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {testApiClient, waitForCometDown} from "@tvs/blockchain";
 import {expect} from "chai";
-import {addAdmin, addKeyMaker, addVoter, startVoteApp} from "@tvs/vote";
+import {addAdmin, addKeyMaker, addVoter, startVoteSwarm} from "@tvs/vote";
 import {readRoles} from "./useRoles.js";
 
 describe('useRoles()', () => {
     it('should return a role for a client', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => readRoles(adminClient).pipe(

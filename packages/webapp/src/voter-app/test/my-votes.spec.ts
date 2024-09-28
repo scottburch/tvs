@@ -1,13 +1,13 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {startCleanValidator, waitForCometDown} from "@tvs/blockchain";
-import {addRace, flagVote, readVote, startVoteApp, vote} from "@tvs/vote";
+import {waitForCometDown} from "@tvs/blockchain";
+import {addRace, flagVote, readVote, startVoteSwarm, vote} from "@tvs/vote";
 import {singleVoterSetup} from "./helpers/setupHelpers.js";
 import {openBrowser} from "@end-game/utils/openBrowser";
 import {doLogin} from "./helpers/loginHelper.js";
 
 describe('my votes page', () => {
     it('should return a list of my votes', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([
                 singleVoterSetup(),
                 openBrowser({url: 'http://localhost:1515/vote'})
@@ -34,7 +34,7 @@ describe('my votes page', () => {
     });
 
     it('should display flags', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([
                 singleVoterSetup(),
                 openBrowser({url: 'http://localhost:1515/vote'})

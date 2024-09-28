@@ -1,6 +1,6 @@
 import {catchError, combineLatest, delay, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {newApiClient, startCleanValidator, waitForCometDown} from "@tvs/blockchain";
-import {addRace, startVoteApp, startVoteSwarm} from "@tvs/vote";
+import {newApiClient, waitForCometDown} from "@tvs/blockchain";
+import {addRace, startVoteSwarm} from "@tvs/vote";
 import {singleVoterSetup} from "./helpers/setupHelpers.js";
 import {openBrowser} from "@end-game/utils/openBrowser";
 import {doLogin} from "./helpers/loginHelper.js";
@@ -11,7 +11,7 @@ import {EncryptedPrivKey, SerializedPrivKey} from "@tvs/crypto";
 
 describe('voting', () => {
     it('can vote', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => singleVoterSetup()),
             switchMap(({privKey, client, adminClient}) => combineLatest([
                 of(client),

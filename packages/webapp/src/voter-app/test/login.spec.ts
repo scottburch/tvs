@@ -1,13 +1,13 @@
-import {catchError, firstValueFrom, of, switchMap, tap, delay, combineLatest} from "rxjs";
-import {startCleanValidator, waitForCometDown} from "@tvs/blockchain";
-import {startVoteApp} from "@tvs/vote";
+import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
+import {waitForCometDown} from "@tvs/blockchain";
+import {startVoteSwarm} from "@tvs/vote";
 import {singleVoterSetup} from "./helpers/setupHelpers.js";
 import {openBrowser} from "@end-game/utils/openBrowser";
 import {doLogin} from "./helpers/loginHelper.js";
 
 describe('login', () => {
     it('can login', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => singleVoterSetup()),
             switchMap(({privKey, client}) => combineLatest([
                 of(client),

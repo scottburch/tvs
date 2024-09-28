@@ -1,13 +1,13 @@
-import {catchError, firstValueFrom, from, of, switchMap, tap, take, toArray} from "rxjs";
-import {startCleanValidator, waitForCometDown} from "@tvs/blockchain";
-import {startVoteApp} from "@tvs/vote";
+import {catchError, firstValueFrom, from, of, switchMap, take, tap, toArray} from "rxjs";
+import {waitForCometDown} from "@tvs/blockchain";
+import {startVoteSwarm} from "@tvs/vote";
 import {multiVoterSetup} from "../../voter-app/test/helpers/setupHelpers.js";
 import {_allRaceResults} from "./useAllRaceResults.js";
 import {expect} from "chai";
 
 describe('useAllRaceResults()', () => {
     it('should return the results for all races', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => multiVoterSetup()),
             switchMap(({client}) => _allRaceResults(client)),
             tap(results => results.sort((a, b) => a.race > b.race ? 1 : -1)),

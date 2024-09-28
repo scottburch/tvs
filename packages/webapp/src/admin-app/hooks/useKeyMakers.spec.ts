@@ -1,13 +1,12 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {startCleanValidator, testApiClient, waitForCometDown} from "@tvs/blockchain";
-import {addAdmin, startVoteApp} from "@tvs/vote";
+import {testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {addAdmin, readKeyMaker, startVoteSwarm} from "@tvs/vote";
 import {createKeyMaker} from "./useKeyMakers.js";
-import {readKeyMaker} from "@tvs/vote";
 import {expect} from 'chai'
 
 describe('useKeyMakers()', () => {
     it('should create a new keymaker in the blockchain returning the pubKey and an encrypted privKey', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient()])),
             switchMap(([adminClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
