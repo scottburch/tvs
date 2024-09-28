@@ -18,8 +18,10 @@ export const update = (map: OrderedMap, key: string, value: any) => {
   return map;
 };
 
-export const get = (map: OrderedMap, key: string) =>
-   map.entries.find(it => it.key === key)?.value
+export const exists = (map: OrderedMap, key: string) => findIdxByKey(map, key) !== -1
+
+export const get = <T>(map: OrderedMap, key: T) =>
+   map.entries.find(it => it.key === key)?.value as T
 
 
 const findIdxByKey = (map: OrderedMap, key: string) =>

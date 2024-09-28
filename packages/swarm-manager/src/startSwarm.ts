@@ -1,7 +1,9 @@
-import {from, map, mergeMap, of, switchMap, tap} from "rxjs";
+import {concatMap, delay, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
 import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
+import {get, update} from "./OrderedMap.js";
+import {startVoteApp} from "@tvs/vote";
 
 
 export type NodeConfig = {
@@ -19,30 +21,80 @@ export const startSwarm = (config: SwarmConfig) =>
         switchMap(() => setDirNames(config)),
         switchMap(() => setIpAddresses(config)),
         switchMap(() => setChainId(config)),
+        switchMap(() => updatePersistentPeers(config)),
+        switchMap(() => startNodes(config)),
         tap(() => console.log(`Swarm Created in ${getBaseDir()}`)),
 
     );
 
+
+const startNodes = (config: SwarmConfig) =>
+    from([...config.validators, ...config.nodes]).pipe(
+        concatMap((n, idx) => startVoteApp({
+            appVersion: 1,
+            version: '1.0.0',
+            home: getBaseDir(n.name),
+            apiPort: 1234 + idx
+        })),
+        delay(Number.MAX_SAFE_INTEGER/1000),
+        last()
+    );
+
+const updatePersistentPeers = (config: SwarmConfig) =>
+    from([...config.validators, ...config.nodes]).pipe(
+        mergeMap(n => of(undefined).pipe(
+            switchMap(() => readConfigFile(n)),
+            switchMap(config => parseToml(config)),
+            switchMap(toml => of(undefined).pipe(
+                map(() => get<string>(toml, 'p2p.persistent_peers')),
+                map(peers => peers.split(',')),
+                map(peers => peers.map((it, idx) => it.replace(/^(.*:).*$/, '$1' + (26656 + 10 * idx).toString()))),
+                map(peers => peers.map(it => it.replace(/(.*@).*(:.*)/, '$1localhost$2'))),
+                map(peers => peers.join(',')),
+                map(peers => update(toml, 'p2p.persistent_peers', peers)),
+                switchMap(toml => stringifyToml(toml)),
+                switchMap(toml => writeConfigFile(n, toml))
+            )),
+        )),
+        last()
+    )
+
+const readConfigFile = (node: NodeConfig) =>
+    fs.readFile(getBaseDir(`${node.name}/config/config.toml`)).then(buf => buf.toString());
+
+const writeConfigFile = (node: NodeConfig, toml: string) =>
+    fs.writeFile(getBaseDir(`${node.name}/config/config.toml`), toml)
+
+const readGenesisFile = (node: NodeConfig) =>
+    fs.readFile(getBaseDir(`${node.name}/config/genesis.json`)).then(buf => buf.toString());
+
+const writeGenesisFile = (node: NodeConfig, json: string) =>
+    fs.writeFile(getBaseDir(`${node.name}/config/genesis.json`), json)
+
+
 const setChainId = (config: SwarmConfig) =>
     from([...config.validators, ...config.nodes]).pipe(
         mergeMap(n => of(undefined).pipe(
-            switchMap(() => fs.readFile(getBaseDir(`${n.name}/config/genesis.json`))),
-            map(json => JSON.parse(json.toString())),
+            switchMap(() => readGenesisFile(n)),
+            map(json => JSON.parse(json)),
             map(genesis => ({...genesis, chain_id: config.chainId})),
-        ))
+            switchMap(json => writeGenesisFile(n, JSON.stringify(json, null, '    ')))
+        )),
+        last()
     )
 
 const setIpAddresses = (config: SwarmConfig) =>
     from([...config.validators, ...config.nodes]).pipe(
         mergeMap((n, idx) => of(undefined).pipe(
-            switchMap(() => fs.readFile(getBaseDir(`${n.name}/config/config.toml`))),
-            switchMap(buf => parseToml(buf.toString())),
-            map(toml => tomlSet(toml, 'proxy_app', `127.0.0.1:${26658 + (10 * idx)}`)),
-            map(toml => tomlSet(toml, 'rpc.laddr', `127.0.0.1:${26657 + (10 * idx)}`)),
-            map(toml => tomlSet(toml, 'p2p.laddr', `127.0.0.1:${26656 + (10 * idx)}`)),
+            switchMap(() => readConfigFile(n)),
+            switchMap(config => parseToml(config)),
+            map(toml => tomlSet(toml, 'proxy_app', `tcp://127.0.0.1:${26658 + (10 * idx)}`)),
+            map(toml => tomlSet(toml, 'rpc.laddr', `tcp://127.0.0.1:${26657 + (10 * idx)}`)),
+            map(toml => tomlSet(toml, 'p2p.laddr', `tcp://127.0.0.1:${26656 + (10 * idx)}`)),
             switchMap(toml => stringifyToml(toml)),
-            switchMap(toml => fs.writeFile(getBaseDir(`${n.name}/config/config.toml`), toml))
+            switchMap(toml => writeConfigFile(n, toml))
         )),
+        last()
     );
 
 const createBaseTestnet = (config: SwarmConfig) =>
@@ -57,12 +109,14 @@ const createBaseTestnet = (config: SwarmConfig) =>
             config.validators.length
         ]),
         map(args => [...args, ...([...config.nodes, ...config.validators]).flatMap(n => (['--hostname', n.name]))]),
-        switchMap(args => $`cometbft ${args}`)
+        switchMap(args => $`cometbft ${args}`),
+        last()
     );
 
 const setDirNames = (config: SwarmConfig) =>
     from([...config.validators, ...config.nodes]).pipe(
-        mergeMap((n, idx) => fs.rename(getBaseDir(`node${idx}`), getBaseDir(n.name)))
+        mergeMap((n, idx) => fs.rename(getBaseDir(`node${idx}`), getBaseDir(n.name))),
+        last()
     )
 
 const getBaseDir = (subdir: string = '') => `${homedir()}/.tvs-test/${subdir}`

@@ -21,12 +21,13 @@ export type AppStore = {
 
 export const newAppStore = (dir: string) => {
     const disk = new Level(dir);
-    return from(disk.open().then(() => ({
+    return from(disk.open()).pipe(
+        map(() => ({
             mem: memlevel(),
-            disk
-        } satisfies AppStore as AppStore)
-    ));
-}
+                disk
+        } satisfies AppStore as AppStore))
+    )
+};
 
 export const newTempStore = (store: AppStore) => ({
     mem: memlevel(),

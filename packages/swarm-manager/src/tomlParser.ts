@@ -1,5 +1,5 @@
 import {defaultIfEmpty, filter, from, last, map, merge, mergeScan, of, scan, switchMap} from "rxjs";
-import {newOrderedMap, add, get, OrderedMap} from "./OrderedMap.js";
+import {newOrderedMap, add, get, OrderedMap, exists, update} from "./OrderedMap.js";
 
 
 export type ParsedToml = OrderedMap;
@@ -48,7 +48,7 @@ export const stringifyToml = (toml: ParsedToml) => from(toml.entries).pipe(
     last()
 );
 
-export const tomlSet = (toml: ParsedToml, key: string, value: any) => add(toml, key, value);
+export const tomlSet = (toml: ParsedToml, key: string, value: any) => exists(toml, key) ? update(toml, key, value) : add(toml, key, value);
 export const tomlGet = (toml: ParsedToml, key: string) => get(toml, key)
 
 

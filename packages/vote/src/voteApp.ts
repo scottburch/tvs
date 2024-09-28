@@ -44,7 +44,7 @@ import {AppConfig} from "@tvs/blockchain";
 
 export type VoteAppConfig = AppConfig & {}
 
-export const startVoteApp = (config: VoteAppConfig) =>
+export const startVoteApp = (config: Partial<VoteAppConfig>) =>
     of({
         ...config,
         msgHandlers: {
