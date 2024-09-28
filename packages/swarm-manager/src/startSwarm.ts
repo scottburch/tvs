@@ -1,4 +1,4 @@
-import {concatMap, delay, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
+import {delay, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
 import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
@@ -30,7 +30,7 @@ export const startSwarm = (config: SwarmConfig) =>
 
 const startNodes = (config: SwarmConfig) =>
     from([...config.validators, ...config.nodes]).pipe(
-        concatMap((n, idx) => startVoteApp({
+         mergeMap((n, idx) => startVoteApp({
             appVersion: 1,
             version: '1.0.0',
             home: getBaseDir(n.name),
