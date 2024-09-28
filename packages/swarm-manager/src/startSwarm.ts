@@ -1,9 +1,10 @@
-import {delay, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
+import {bufferCount, delay, from, last, map, mergeMap, of, switchMap, take, tap, toArray} from "rxjs";
 import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
 import {get, update} from "./OrderedMap.js";
 import {startVoteApp} from "@tvs/vote";
+import {startApp} from "@tvs/blockchain";
 
 
 export type NodeConfig = {
@@ -16,28 +17,30 @@ export type SwarmConfig = {
     validators: NodeConfig[]
 }
 
-export const startSwarm = (config: SwarmConfig) =>
+
+export const startSwarm = (config: SwarmConfig, startAppFn: typeof startApp = startApp) =>
     createBaseTestnet(config).pipe(
         switchMap(() => setDirNames(config)),
         switchMap(() => setIpAddresses(config)),
         switchMap(() => setChainId(config)),
         switchMap(() => updatePersistentPeers(config)),
-        switchMap(() => startNodes(config)),
-        tap(() => console.log(`Swarm Created in ${getBaseDir()}`)),
-
+        switchMap(() => startNodes(config, startAppFn)),
     );
 
 
-const startNodes = (config: SwarmConfig) =>
+const startNodes = (config: SwarmConfig, startAppFn: typeof startApp = startApp) =>
     from([...config.validators, ...config.nodes]).pipe(
-         mergeMap((n, idx) => startVoteApp({
+         mergeMap((n, idx) => startAppFn({
             appVersion: 1,
             version: '1.0.0',
             home: getBaseDir(n.name),
-            apiPort: 1234 + idx
-        })),
-        delay(Number.MAX_SAFE_INTEGER/1000),
-        last()
+            apiPort: 1234 + idx,
+             msgHandlers: {},
+             queryHandlers: {}
+        }).pipe(
+            tap(() => console.log('Started node: ', n.name))
+         )),
+        bufferCount(config.validators.length + config.nodes.length),
     );
 
 const updatePersistentPeers = (config: SwarmConfig) =>

@@ -174,7 +174,6 @@ describe('vote auditors', () => {
                     ))
                 )),
                 switchMap(() => readAuditors(keyMakerClient)),
-                tap(x => x)
             )),
             tap(() => waitForCometDown().then(() => done())),
             catchError(err => of(done(err))),
