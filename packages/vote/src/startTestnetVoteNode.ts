@@ -1,3 +1,7 @@
+// Here for historical purposes.  Needed mostly just for the keys until I build something else
+
+
+/*
 import {newApiClient} from "@tvs/blockchain";
 import {startVoteApp} from "./voteApp.js";
 import {combineLatest, filter, of, switchMap, tap} from "rxjs";
@@ -72,7 +76,7 @@ of(undefined).pipe(
         switchMap(() => addRace(adminClient, {name: 'night-watchman', candidates: ['Joan', 'Karen', 'Sally']}))
     ))
 ).subscribe();
-
+*/
 /*******************
  **** Keys
  * admin - QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=

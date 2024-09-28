@@ -1,5 +1,5 @@
-import {startSwarm} from "@tvs/swarm-manager";
 import {startVoteApp} from "../voteApp.js";
+import {startSwarm} from "@tvs/blockchain";
 
 export type StartVoteSwarmOpts = {
     numValidators: number,

@@ -3,7 +3,7 @@ import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
 import {get, update} from "./OrderedMap.js";
-import {startApp} from "@tvs/blockchain";
+import {AppConfig, startApp} from "@tvs/blockchain";
 
 
 export type NodeConfig = {
@@ -14,6 +14,8 @@ export type SwarmConfig = {
     chainId: string
     nodes: NodeConfig[]
     validators: NodeConfig[]
+    msgHandlers?: AppConfig['msgHandlers']
+    queryHandlers?: AppConfig['queryHandlers']
 }
 
 
@@ -35,8 +37,8 @@ const startNodes = (config: SwarmConfig, startAppFn: typeof startApp = startApp)
             version: '1.0.0',
             home: getBaseDir(n.name),
             apiPort: 1234 + idx,
-             msgHandlers: {},
-             queryHandlers: {}
+             msgHandlers: config.msgHandlers || {},
+             queryHandlers: config.queryHandlers || {}
         }).pipe(
             tap(() => console.log('Started node: ', n.name))
          )),

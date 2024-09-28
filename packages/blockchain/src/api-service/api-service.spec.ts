@@ -1,4 +1,4 @@
-import {startCleanValidator, waitForCometDown} from "../blockchainTestUtils.js";
+import {startTestSwarm, waitForCometDown} from "../blockchainTestUtils.js";
 import {catchError, delay, firstValueFrom, of, switchMap, tap, throwError} from "rxjs";
 import {getTxByHash, newApiClient, sendQuery, sendTx} from "../api-client/api-client.js";
 import {generateNewKeyPair, serializeKey} from "@tvs/crypto";
@@ -9,7 +9,7 @@ import {newTransaction, signTx} from "../Tx.js";
 
 describe('api service', () => {
     it('should startup the api proxy service based on paths passed to the app', (done) => {
-        firstValueFrom(startCleanValidator({
+        firstValueFrom(startTestSwarm({
             msgHandlers: {'my/tx': () => of(undefined)},
             queryHandlers: {'my/query': ({data}) => of({key: 'my-key', value: JSON.stringify({foo:10, ...data})})}
         }).pipe(
@@ -50,7 +50,7 @@ describe('api service', () => {
     });
 
     it('should forward errors to the api-client', (done) => {
-        firstValueFrom(startCleanValidator({
+        firstValueFrom(startTestSwarm({
             msgHandlers: {'my/tx': _ => throwError(() => ({code: 1, log: 'some error'}))},
         }).pipe(
             switchMap(() => generateNewKeyPair()),

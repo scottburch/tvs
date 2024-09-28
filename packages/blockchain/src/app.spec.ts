@@ -22,15 +22,15 @@ import {generateNewKeyPair} from "@tvs/crypto";
 import {expect} from "chai";
 import {ResponseCheckTx} from "@tvs/proto";
 import {exists, findPrefix, get, put} from "./appStore.js";
-import {broadcastTestTx, startCleanValidator, waitForCometDown} from "./blockchainTestUtils.js";
+import {broadcastTestTx, startTestSwarm, waitForCometDown} from "./blockchainTestUtils.js";
 import {broadcastTx, query, tvsClient, waitForTx} from "./rpc-client.js";
 import {newTransaction, signTx, Transaction} from "./Tx.js";
 
 describe('the application functions', () => {
     describe('reading the toml configs', () => {
         it('should be able to read the config.toml file', (done) => {
-            firstValueFrom(startCleanValidator().pipe(
-                switchMap(app => readCometConfig(app)),
+            firstValueFrom(startTestSwarm().pipe(
+                switchMap(apps => readCometConfig(apps[0])),
                 tap(() => waitForCometDown().then(() => done()))
             ));
         });
@@ -38,7 +38,7 @@ describe('the application functions', () => {
 
     describe('mempool transaction processing', () => {
         it('should not allow a transaction into the mempool with a bad signature', (done) => {
-            firstValueFrom(startCleanValidator().pipe(
+            firstValueFrom(startTestSwarm().pipe(
                 switchMap(() => generateNewKeyPair()),
                 switchMap(keys => combineLatest([
                     of(keys),
@@ -71,7 +71,7 @@ describe('the application functions', () => {
                 return of(undefined);
             }
 
-            firstValueFrom(startCleanValidator({msgHandlers: {'my/path': msgProcessor}}).pipe(
+            firstValueFrom(startTestSwarm({msgHandlers: {'my/path': msgProcessor}}).pipe(
                 switchMap(() => broadcastTestTx({msgs: [{path: 'my/path', data: {foo: 10}}]}))
             ))
         });
@@ -81,12 +81,12 @@ describe('the application functions', () => {
                 put(opts.app.appStore, 'my-key', 'my-val');
 
 
-            firstValueFrom(startCleanValidator({msgHandlers: {'my/path': msgProcessor}}).pipe(
-                switchMap(app => of(undefined).pipe(
+            firstValueFrom(startTestSwarm({msgHandlers: {'my/path': msgProcessor}}).pipe(
+                switchMap(apps => of(undefined).pipe(
                     switchMap(() => combineLatest([
                         broadcastTestTx({msgs: [{path: 'my/path', data: {foo: 10}}]}),
                     ])),
-                    switchMap(() => exists(app.appStore, 'my-key')),
+                    switchMap(() => exists(apps[0].appStore, 'my-key')),
                     switchMap(exists => exists ? throwError(() => 'key should not exist') : of(undefined)),
                     tap(() => waitForCometDown().then(() => done())),
                     catchError(err => of(done(err))),
@@ -99,7 +99,7 @@ describe('the application functions', () => {
                 switchMap(() => throwError(() => ({code: 1, log: 'some error'})))
             )
 
-            firstValueFrom(startCleanValidator({msgHandlers: {'my/path': msgProcessor}}).pipe(
+            firstValueFrom(startTestSwarm({msgHandlers: {'my/path': msgProcessor}}).pipe(
                     switchMap(() => broadcastTestTx({msgs: [{path: 'my/path', data: {foo: 10}}]})),
                     tap(() => done('should not reach here.  Should throw error')),
                     catchError(err => of(err)),
@@ -117,7 +117,7 @@ describe('the application functions', () => {
 
     describe('processing transactions for inclusion in a block', () => {
         it('should return an error if a message in the transaction has no handler', (done) => {
-            firstValueFrom(startCleanValidator({}).pipe(
+            firstValueFrom(startTestSwarm().pipe(
                 switchMap(() => broadcastTestTx({msgs: [{path: 'no-path', data: {}}]})),
                 catchError(err => of(err)),
                 tap(err => {
@@ -146,7 +146,7 @@ describe('the application functions', () => {
                 )
             }
 
-            firstValueFrom(startCleanValidator({
+            firstValueFrom(startTestSwarm({
                 msgHandlers: {
                     'good': msgProcessor,
                     'bad': msgProcessor
@@ -180,13 +180,13 @@ describe('the application functions', () => {
                 )
             }
 
-            firstValueFrom(startCleanValidator({
+            firstValueFrom(startTestSwarm({
                 msgHandlers: {
                     'my/path1': msgProcessor,
                     'my/path2': msgProcessor,
                 }
             }).pipe(
-                switchMap(app => of(undefined).pipe(
+                switchMap(apps => of(undefined).pipe(
                     switchMap(() => combineLatest([
                         broadcastTestTx({msgs: [{path: 'my/path1', data: {key: 'foo1', val: 'val1'}}]}),
                         broadcastTestTx({msgs: [{path: 'my/path2', data: {key: 'foo2', val: 'val2'}}]}),
@@ -195,7 +195,7 @@ describe('the application functions', () => {
                         waitForTx(client, hash1),
                         waitForTx(client, hash2)
                     ])),
-                    switchMap(() => from(app.appStore.disk.iterator()).pipe(
+                    switchMap(() => from(apps[0].appStore.disk.iterator()).pipe(
                         toArray(),
                         tap(stored => expect(stored).to.deep.equal([
                             ["foo1", "val1"],
@@ -220,7 +220,7 @@ describe('the application functions', () => {
         } satisfies QueryHandlerResult;
 
         it('should return an error message if no handler exists for this path', (done) => {
-            firstValueFrom(startCleanValidator().pipe(
+            firstValueFrom(startTestSwarm().pipe(
                 switchMap(_ => of(undefined).pipe(
                     map(() => tvsClient()),
                     switchMap(client => query(client, {path: 'my/query', data: {foo: 10}, proof: false, height: '0'})),
@@ -252,7 +252,7 @@ describe('the application functions', () => {
             })
 
 
-            firstValueFrom(startCleanValidator({
+            firstValueFrom(startTestSwarm({
                 queryHandlers: {
                     'my/query': myQueryHandler
                 }
@@ -283,7 +283,7 @@ describe('the application functions', () => {
             )
 
 
-            firstValueFrom(startCleanValidator({
+            firstValueFrom(startTestSwarm({
                 queryHandlers: {
                     'my/query': myQueryHandler
                 }
@@ -325,7 +325,7 @@ describe('the application functions', () => {
             catchError(err => of({code: 1, log: err.code}))
         );
 
-        firstValueFrom(startCleanValidator({
+        firstValueFrom(startTestSwarm({
             queryHandlers: {'my/query': myQueryHandler},
             msgHandlers: {'my/msg': myMsgHandler}
         }).pipe(
