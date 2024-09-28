@@ -1,4 +1,4 @@
-import {bufferCount, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
+import {bufferCount, delay, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
 import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
@@ -24,6 +24,7 @@ export const startSwarm = (config: SwarmConfig, startAppFn: typeof startApp = st
         switchMap(() => setChainId(config)),
         switchMap(() => updatePersistentPeers(config)),
         switchMap(() => startNodes(config, startAppFn)),
+        delay(2000)  //TODO: Replace with something deterministic to check if the swarm is up
     );
 
 

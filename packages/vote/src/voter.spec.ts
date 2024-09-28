@@ -11,10 +11,11 @@ import {startVoteApp} from "./voteApp.js";
 import {addAdmin, addKeyMaker, addVoter, readVoter, readVoters} from "./vote-client.js";
 import {expect} from "chai";
 import {Voter} from "./types.js";
+import {startVoteSwarm} from "./test-utils/startSwarm.js";
 
 describe('voter', () => {
     it('can be created', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
