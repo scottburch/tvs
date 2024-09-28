@@ -1,21 +1,12 @@
-import {startCleanValidator, testApiClient, waitForCometDown} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
+import {testApiClient, waitForCometDown} from "@tvs/blockchain";
 import {catchError, combineLatest, delay, firstValueFrom, map, of, switchMap, tap} from "rxjs";
 import {expect} from 'chai'
-import {
-    addAdmin,
-    addKeyMaker,
-    addRace,
-    addVoter,
-    readRaceResults,
-    readVotesByVoter,
-    readVoteTxByHash,
-    vote
-} from "./vote-client.js";
+import {addAdmin, addKeyMaker, addRace, addVoter, readRaceResults, readVotesByVoter, readVoteTxByHash, vote} from "./vote-client.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 describe('voting blockchain app', () => {
     it('should startup a server', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -32,7 +23,7 @@ describe('voting blockchain app', () => {
 
 
     it('should not be able to cast a double vote', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -67,7 +58,7 @@ describe('voting blockchain app', () => {
 
 
     it('should require that the voter be registered before voting', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(client => vote(client, {
                 race: 'dog-catcher',
@@ -84,7 +75,7 @@ describe('voting blockchain app', () => {
     });
 
     it('can verify a vote by its transaction hash', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -105,7 +96,7 @@ describe('voting blockchain app', () => {
     });
 
     it('can lookup votes by a voters pubKey', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => of(undefined).pipe(

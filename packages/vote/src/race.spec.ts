@@ -1,13 +1,13 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {startCleanValidator, testApiClient, waitForCometDown} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
+import {testApiClient, waitForCometDown} from "@tvs/blockchain";
 import {addAdmin, addRace, readRace, readRaces} from "./vote-client.js";
 import {expect} from "chai";
 import {Race} from "./types.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 describe('race', () => {
     it('should allow a admin to create a new race', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -24,7 +24,7 @@ describe('race', () => {
     });
 
     it('should only allow an admin to create a race', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient()])),
             switchMap( ([adminClient, client]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -43,7 +43,7 @@ describe('race', () => {
     });
 
     it("can return a list of races", (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -74,7 +74,7 @@ describe('race', () => {
     });
 
     it('should return an empty array if there are no races', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),

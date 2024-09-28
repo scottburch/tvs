@@ -1,8 +1,8 @@
-import {newApiClient, startCleanValidator} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
+import {newApiClient} from "@tvs/blockchain";
 import {combineLatest, of, switchMap, tap} from "rxjs";
 import {encryptPrivKey, SerializedPrivKey} from "@tvs/crypto";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoteCounter, addVoter} from "./vote-client.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 
 of(undefined).pipe(
@@ -24,7 +24,7 @@ of(undefined).pipe(
         console.log('password', '12345')
         console.log('\n\n')
     }),
-    switchMap(() => startCleanValidator({}, startVoteApp)),
+    switchMap(() => startVoteSwarm()),
     switchMap(() => combineLatest([
         newApiClient({
             url: 'http://localhost:1234',

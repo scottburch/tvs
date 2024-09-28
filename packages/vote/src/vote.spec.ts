@@ -1,22 +1,13 @@
 import {catchError, combineLatest, firstValueFrom, mergeMap, of, range, switchMap, tap, toArray} from "rxjs";
-import {startCleanValidator, testApiClient, waitForCometDown} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
-import {
-    addAdmin,
-    addKeyMaker,
-    addRace,
-    addVoteCounter,
-    addVoter,
-    readRaceResults,
-    readVote, readVotesByRace,
-    vote
-} from "./vote-client.js";
+import {testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {addAdmin, addKeyMaker, addRace, addVoteCounter, addVoter, readRaceResults, readVote, readVotesByRace, vote} from "./vote-client.js";
 import {expect} from "chai";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 describe('votes', () => {
 
     it('should be able to read a vote by race and voter', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -39,7 +30,7 @@ describe('votes', () => {
     });
 
     it('should be able to read a votes by race', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, counterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -76,7 +67,7 @@ describe('votes', () => {
     });
 
     it('should be able to cast votes', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),

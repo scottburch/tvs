@@ -4,18 +4,17 @@ import {
     sendQuery,
     sendTx,
     signTx,
-    startCleanValidator,
     testApiClient,
     waitForCometDown, waitForTx
 } from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
 import {expect} from "chai";
 import {addAdmin, addKeyMaker, addRace, addVoteCounter, readVotesByVoter, vote} from "./vote-client.js";
 import {KeyMaker, VoteCounter} from "./types.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 describe('vote counter', () => {
     it('can be created', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voteCounterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -33,7 +32,7 @@ describe('vote counter', () => {
     });
 
     it('can vote more than once', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, counterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -68,7 +67,7 @@ describe('vote counter', () => {
     });
 
     it('can only be created by a key maker', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(client => of(undefined).pipe(
                 switchMap(() => addVoteCounter(client, client.pubKey)),
@@ -89,7 +88,7 @@ describe('vote counter', () => {
     });
 
     it('ensures that the maker key is the same as the signer', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient1, keyMakerClient2, voteCounterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),

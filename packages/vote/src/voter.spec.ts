@@ -3,15 +3,13 @@ import {
     newTransaction,
     sendTx,
     signTx,
-    startCleanValidator,
     testApiClient,
     waitForCometDown, waitForTx
 } from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
 import {addAdmin, addKeyMaker, addVoter, readVoter, readVoters} from "./vote-client.js";
 import {expect} from "chai";
 import {Voter} from "./types.js";
-import {startVoteSwarm} from "./test-utils/startSwarm.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 describe('voter', () => {
     it('can be created', (done) => {
@@ -33,7 +31,7 @@ describe('voter', () => {
     });
 
     it('can only be created by a key maker', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient()])),
             switchMap(([fakeClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addVoter(fakeClient, voterClient.pubKey)),
@@ -55,7 +53,7 @@ describe('voter', () => {
     });
 
     it('ensures that the maker address matches the tx signer', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -87,7 +85,7 @@ describe('voter', () => {
     });
 
     it('can return a list of voters', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),

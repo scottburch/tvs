@@ -1,24 +1,15 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {
-    newApiClient,
-    newTransaction,
-    sendQuery,
-    sendTx,
-    signTx,
-    startCleanValidator,
-    testApiClient,
-    waitForCometDown
-} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
+import {newApiClient, newTransaction, sendQuery, sendTx, signTx, testApiClient, waitForCometDown} from "@tvs/blockchain";
 import {generateNewKeyPair, serializeKey} from "@tvs/crypto";
 import {expect} from 'chai'
 import {addAdmin, readAdmin} from "./vote-client.js";
 import {Admin} from "./types.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 
 describe('voting admin', () => {
     it('should create and read voting admin', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -31,7 +22,7 @@ describe('voting admin', () => {
     });
 
     it('should stop someone from putting in a pubKey that is not the pubKey of the signer', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => generateNewKeyPair()),
             switchMap(keys => combineLatest([
                 of(keys),
@@ -64,7 +55,7 @@ describe('voting admin', () => {
     });
 
     it('should stop someone from changing the admin after creation', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(client => of(undefined).pipe(
                 switchMap(() => addAdmin(client)),
@@ -88,7 +79,7 @@ describe('voting admin', () => {
     });
 
     it('should throw error if no admin exists', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => testApiClient()),
             switchMap(client => readAdmin(client)),
             catchError(err => of(err)),

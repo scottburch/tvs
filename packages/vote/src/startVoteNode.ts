@@ -1,4 +1,3 @@
-import {startCleanValidator} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
-startCleanValidator({}, startVoteApp).subscribe();
+startVoteSwarm().subscribe();

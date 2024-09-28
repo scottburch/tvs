@@ -3,12 +3,10 @@ import {
     newTransaction,
     sendTx,
     signTx,
-    startCleanValidator,
     testApiClient,
     waitForCometDown,
     waitForTx
 } from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
 import {
     addAdmin,
     addAuditor,
@@ -24,10 +22,11 @@ import {
 } from "./vote-client.js";
 import {expect} from "chai";
 import {Auditor} from "./types.js";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
 describe('vote auditors', () => {
     it('can be created by a keymaker', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, auditorClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -45,7 +44,7 @@ describe('vote auditors', () => {
     });
 
     it('can only be created by a key maker', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient()])),
             switchMap(([fakeClient, auditorClient]) => of(undefined).pipe(
                 switchMap(() => addAuditor(fakeClient, auditorClient.pubKey)),
@@ -67,7 +66,7 @@ describe('vote auditors', () => {
     });
 
     it('ensures that the maker address matches the tx signer', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, auditorClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -99,7 +98,7 @@ describe('vote auditors', () => {
     });
 
     it('can flag a vote', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, auditorClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -133,7 +132,7 @@ describe('vote auditors', () => {
     });
 
     it('should ensure that only an auditor can flag a vote', (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
@@ -162,7 +161,7 @@ describe('vote auditors', () => {
     });
 
     it("should be able to return a list of auditors", (done) => {
-        firstValueFrom(startCleanValidator({}, startVoteApp).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
