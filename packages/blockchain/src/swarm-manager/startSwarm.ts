@@ -1,4 +1,4 @@
-import {bufferCount, delay, from, last, map, mergeMap, of, switchMap, tap} from "rxjs";
+import {bufferCount, delay, from, last, map, mergeMap, of, switchMap, tap, timer} from "rxjs";
 import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
@@ -29,19 +29,20 @@ export const startSwarm = (config: SwarmConfig, startAppFn: typeof startApp = st
         delay(2000)  //TODO: Replace with something deterministic to check if the swarm is up
     );
 
-
 const startNodes = (config: SwarmConfig, startAppFn: typeof startApp = startApp) =>
     from([...config.validators, ...config.nodes]).pipe(
-         mergeMap((n, idx) => startAppFn({
-            appVersion: 1,
-            version: '1.0.0',
-            home: getBaseDir(n.name),
-            apiPort: 1234 + idx,
-             msgHandlers: config.msgHandlers || {},
-             queryHandlers: config.queryHandlers || {}
-        }).pipe(
-            tap(() => console.log('Started node: ', n.name))
-         )),
+        mergeMap((n, idx) => of(undefined).pipe(
+            delay(idx * 1000), // needed to get around what looks like a network problem on Mac - spread them out
+            tap(() => console.log('Starting node', n.name)),
+            switchMap(() => startAppFn({
+                appVersion: 1,
+                version: '1.0.0',
+                home: getBaseDir(n.name),
+                apiPort: 1234 + idx,
+                msgHandlers: config.msgHandlers || {},
+                queryHandlers: config.queryHandlers || {}
+            })),
+        )),
         bufferCount(config.validators.length + config.nodes.length),
     );
 

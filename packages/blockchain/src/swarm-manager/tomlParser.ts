@@ -36,8 +36,8 @@ export const parseToml = (toml: string) => of(toml).pipe(
 export const stringifyToml = (toml: ParsedToml) => from(toml.entries).pipe(
     mergeScan((out, {key, value}) => {
         return merge(
-            of(it).pipe(
-                filter(it => !key.startsWith('#') && !key.startsWith('[')),
+            of(undefined).pipe(
+                filter(() => !key.startsWith('#') && !key.startsWith('[')),
                 map(() => key.replace(/.*\./, '')),
                 map(key => `${out}${out ? '\n' : ''}${key} = ${JSON.stringify(value)}`)
             )

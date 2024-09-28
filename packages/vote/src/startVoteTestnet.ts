@@ -1,26 +1,9 @@
-// Here for historical purposes.  Needed mostly just for the keys until I build something else
-
-
-/*
 import {newApiClient} from "@tvs/blockchain";
-import {startVoteApp} from "./voteApp.js";
-import {combineLatest, filter, of, switchMap, tap} from "rxjs";
+import {combineLatest, of, switchMap, tap} from "rxjs";
 import {encryptPrivKey, SerializedPrivKey} from "@tvs/crypto";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoteCounter, addVoter} from "./vote-client.js";
-import {startTestnetNode} from "@tvs/blockchain";
+import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 
-import {program} from 'commander'
-    program
-        .argument('<nodeName>')
-        .option( '--api-port <apiPort>')
-    program.parse();
-
-const nodeName = program.args[0];
-const apiPort = program.getOptionValue('apiPort');
-
-console.log('Starting node: ', nodeName);
-console.log('--------------');
-console.log('api-port: ', apiPort);
 
 of(undefined).pipe(
     switchMap(() => combineLatest([
@@ -41,8 +24,7 @@ of(undefined).pipe(
         console.log('password', '12345')
         console.log('\n\n')
     }),
-    switchMap(() => startTestnetNode({nodeName: nodeName, apiPort}, startVoteApp)),
-    filter(() => nodeName === 'root'),
+    switchMap(() => startVoteSwarm({numValidators: 3, numNodes: 1})),
     switchMap(() => combineLatest([
         newApiClient({
             url: 'http://localhost:1234',
@@ -76,7 +58,7 @@ of(undefined).pipe(
         switchMap(() => addRace(adminClient, {name: 'night-watchman', candidates: ['Joan', 'Karen', 'Sally']}))
     ))
 ).subscribe();
-*/
+
 /*******************
  **** Keys
  * admin - QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=

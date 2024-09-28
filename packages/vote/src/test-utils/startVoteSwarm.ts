@@ -9,6 +9,6 @@ export type StartVoteSwarmOpts = {
 export const startVoteSwarm = (opts: StartVoteSwarmOpts = {numValidators: 1, numNodes: 0}) =>
     startSwarm({
         chainId: 'my-chain',
-        nodes: [],
+        nodes: Array(opts.numValidators).fill(1).map((_, idx) => ({name: `node-${idx}`})),
         validators: Array(opts.numValidators).fill(1).map((_, idx) => ({name: `val-${idx}`}))
     }, startVoteApp)
