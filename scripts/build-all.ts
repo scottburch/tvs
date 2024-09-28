@@ -3,7 +3,7 @@ import {from, switchMap, tap, concatMap, of, mergeMap, last} from "rxjs";
 
 const root = `${process.cwd()}/../`;
 
-const packages = ['crypto', 'proto', 'blockchain', 'vote', 'react', 'webapp', 'website'];
+const packages = ['crypto', 'proto', 'blockchain', 'swarm-manager', 'vote', 'react', 'webapp', 'website'];
 
 from(packages).pipe(
     tap(pkg => console.log('Removing "lib" and "dist" directories: ', pkg)),
