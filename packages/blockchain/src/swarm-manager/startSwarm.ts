@@ -1,4 +1,4 @@
-import {bufferCount, delay, from, last, map, mergeMap, of, switchMap, tap, timer} from "rxjs";
+import {bufferCount, defaultIfEmpty, delay, filter, from, last, map, mergeMap, of, switchMap, tap, timer} from "rxjs";
 import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
@@ -16,6 +16,7 @@ export type SwarmConfig = {
     validators: NodeConfig[]
     msgHandlers?: AppConfig['msgHandlers']
     queryHandlers?: AppConfig['queryHandlers']
+    globalConfigs?: Record<string, any>
 }
 
 
@@ -25,9 +26,27 @@ export const startSwarm = (config: SwarmConfig, startAppFn: typeof startApp = st
         switchMap(() => setIpAddresses(config)),
         switchMap(() => setChainId(config)),
         switchMap(() => updatePersistentPeers(config)),
+        switchMap(() => setGlobalConfigs(config)),
         switchMap(() => startNodes(config, startAppFn)),
         delay(2000)  //TODO: Replace with something deterministic to check if the swarm is up
     );
+
+const setGlobalConfigs = (config: SwarmConfig) =>
+    from([...config.validators, ...config.nodes]).pipe(
+        filter(() => Object.keys(config.globalConfigs || {}).length > 0),
+        mergeMap(n => of(undefined).pipe(
+            switchMap(() => readConfigFile(n)),
+            switchMap(toml => parseToml(toml)),
+            switchMap(toml => of(undefined).pipe(
+                switchMap(() => from(Object.entries(config.globalConfigs || {}))),
+                map(([key, value]) => tomlSet(toml, key, value))
+            )),
+            switchMap(toml => stringifyToml(toml)),
+            switchMap(toml => writeConfigFile(n, toml))
+        )),
+        last(),
+        defaultIfEmpty(undefined)
+    )
 
 const startNodes = (config: SwarmConfig, startAppFn: typeof startApp = startApp) =>
     from([...config.validators, ...config.nodes]).pipe(

@@ -5,7 +5,6 @@
   "private": true,
   "dependencies": {
     "@tvs/blockchain": "^1.0.0",
-    "@tvs/swarm-manager": "^1.0.0",
     "@types/chai": "^4.3.17",
     "@types/mocha": "^10.0.7",
     "@types/node": "^22.3.0",
@@ -23,8 +22,7 @@
   },
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "start-demo-server": "node ./lib/startDemoVoteNode.js",
-    "start-testnet-node": "npx tsx src/startTestnetVoteNode.ts",
+    "start-vote-testnet": "npx tsx src/startVoteTestnet.ts",
     "test": "mocha src/**/*.spec.ts"
   },
   "engines": {
