@@ -48,11 +48,12 @@ const setGlobalConfigs = (config: SwarmConfig) =>
         defaultIfEmpty(undefined)
     )
 
+const start = Date.now();
 const startNodes = (config: SwarmConfig, startAppFn: typeof startApp = startApp) =>
     from([...config.validators, ...config.nodes]).pipe(
         mergeMap((n, idx) => of(undefined).pipe(
             delay(idx * 1000), // needed to get around what looks like a network problem on Mac - spread them out
-            tap(() => console.log('Starting node', n.name)),
+            tap(() => console.log('Starting node', n.name, `(${Date.now() - start})`)),
             switchMap(() => startAppFn({
                 appVersion: 1,
                 version: '1.0.0',
@@ -74,7 +75,7 @@ const updatePersistentPeers = (config: SwarmConfig) =>
                 map(() => get<string>(toml, 'p2p.persistent_peers')),
                 map(peers => peers.split(',')),
                 map(peers => peers.map((it, idx) => it.replace(/^(.*:).*$/, '$1' + (26656 + 10 * idx).toString()))),
-                map(peers => peers.map(it => it.replace(/(.*@).*(:.*)/, '$1localhost$2'))),
+                map(peers => peers.map(it => it.replace(/(.*@).*(:.*)/, '$1127.0.0.1$2'))),
                 map(peers => peers.join(',')),
                 map(peers => update(toml, 'p2p.persistent_peers', peers)),
                 switchMap(toml => stringifyToml(toml)),

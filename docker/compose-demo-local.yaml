@@ -1,0 +1,15 @@
+services:
+  vote-app:
+    container_name: vote-app
+    network_mode: service:webapp
+    build:
+      context: .
+      dockerfile: dockerfile-blockchain
+
+  webapp:
+    container_name: webapp
+    ports:
+      - 1515:1515
+    build:
+      context: .
+      dockerfile: dockerfile-webapp
