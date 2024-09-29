@@ -126,11 +126,11 @@ const DockerDemo: React.FC = () => (
                 Unpack the tvs-docker.tgz file
             </ListItem>
             <ListItem sx={{display: 'list-item'}}>
-                In a terminal type: <Typography component={'code'}>docker compose build --build-arg ARCH=amd64</Typography>
-                <Typography variant={'subtitle2'}>If you are on a ARM based system (like the Mac M series), replace "amd64" with "arm64"</Typography>
+                In a terminal type: <Typography component={'code'}>docker compose -f compose-demo-local.yaml build --build-arg ARCH=[arch]</Typography>
+                <Typography variant={'subtitle2'}>If you are on a ARM based system (like the Mac M series), replace [arch] with "arm64", otherwise use "amd64"</Typography>
             </ListItem>
             <ListItem sx={{display: 'list-item'}}>
-                When that completes (which might take a while), type: <Typography component={'code'}>docker compose up</Typography>
+                When that completes (which might take a while), type: <Typography component={'code'}>docker compose -f compose-demo-local.yaml up</Typography>
             </ListItem>
             <ListItem sx={{display: 'list-item'}}>
                 Go to url: <a href={'http://localhost:1515'}>http://localhost:1515</a>
