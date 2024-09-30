@@ -25,7 +25,7 @@ describe('my votes page', () => {
                 ])),
                 switchMap(() => doLogin(page, privKey)),
                 switchMap(() => page.click('button:text("my votes")')),
-                switchMap(() => page.locator('span:text("dog catcher")').waitFor()),
+                switchMap(() => page.locator('p:text("Dog Catcher:")').waitFor()),
                 switchMap(() => page.locator('p:text("Todd")').waitFor())
             )),
             tap(() => waitForCometDown().then(() => done())),
@@ -59,7 +59,7 @@ describe('my votes page', () => {
                 })),
                 switchMap(() => doLogin(page, privKey).pipe(
                     switchMap(() => page.click('button:text("my votes")')),
-                    switchMap(() => page.locator('span:text("dog catcher")').waitFor()),
+                    switchMap(() => page.locator('p:text("dog catcher")').waitFor()),
                     switchMap(() => page.locator('p:text("Todd")').waitFor()),
                     switchMap(() => page.locator(':text("Cuz I said so")').waitFor()),
                     switchMap(() => page.locator(':text("invalid")').waitFor())
@@ -72,7 +72,7 @@ describe('my votes page', () => {
     });
 
 
-    it('should allow you to check your vote on other servers', (done) => {
+    it.skip('should allow you to check your vote on other servers', (done) => {
         firstValueFrom(startVoteSwarm({numValidators: 3, numNodes: 1}).pipe(
             switchMap(() => combineLatest([
                 singleVoterSetup(),

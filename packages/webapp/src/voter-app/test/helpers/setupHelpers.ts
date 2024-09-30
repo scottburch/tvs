@@ -6,8 +6,8 @@ import {addRace} from "@tvs/vote";
 
 export const noVoterSetup = () =>
     combineLatest([
-        newRandomApiClient('QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=' as SerializedPrivKey),
-        newRandomApiClient('YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey)
+        newRandomApiClient('http://localhost:1234', 'QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=' as SerializedPrivKey),
+        newRandomApiClient('http://localhost:1234', 'YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey)
     ]).pipe(
         switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
             switchMap(() => addAdmin(adminClient)),
