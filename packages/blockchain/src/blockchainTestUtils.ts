@@ -1,9 +1,10 @@
-import {AppConfig, broadcastTx, newApiClient, newTransaction, Query, sendQuery, sendTx, signTx, startApp, tvsClient, UnsignedTransaction} from "./index.js";
+import {AppConfig, broadcastTx, newTransaction, Query, sendQuery, sendTx, signTx, startApp, tvsClient, UnsignedTransaction} from "./index.js";
 import {combineLatest, firstValueFrom, from, map, of, switchMap} from "rxjs";
 import {waitFor} from "poll-until-promise";
 import psList from "ps-list";
-import {generateNewKeyPair, SerializedPrivKey, serializeKey} from "@tvs/crypto";
+import {generateNewKeyPair} from "@tvs/crypto";
 import {startSwarm} from "@tvs/blockchain";
+import {newRandomApiClient} from "./api-client/api-client.js";
 
 
 export const waitForCometDown = () => waitFor(() => {
@@ -23,17 +24,10 @@ export const broadcastTestTx = (tx: UnsignedTransaction) =>
         switchMap(({client, tx}) => broadcastTx(client, tx).pipe(map(({hash}) => ({hash, client})))),
     );
 
-export const testApiClient = (privKey: SerializedPrivKey = '' as SerializedPrivKey) =>
-    (privKey ? of(privKey) : generateNewKeyPair().pipe(
-        switchMap(keys => serializeKey(keys.privKey))
-    )).pipe(
-        switchMap(privKey => newApiClient({url: 'http://localhost:1234', privKey}))
-    );
-
 export const sendTestTx = (tx: UnsignedTransaction) =>
     combineLatest([
         newTransaction(tx),
-        testApiClient()
+        newRandomApiClient()
     ]).pipe(
         switchMap(([tx, client]) => signTx(tx, client.keys).pipe(
             switchMap(tx => sendTx(client, tx)),
@@ -42,7 +36,7 @@ export const sendTestTx = (tx: UnsignedTransaction) =>
     );
 
 export const sendTestQuery = (query: Query) =>
-    testApiClient().pipe(
+    newRandomApiClient().pipe(
         switchMap(client => sendQuery(client, query))
     );
 

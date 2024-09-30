@@ -1,4 +1,4 @@
-import {testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
 import {catchError, combineLatest, delay, firstValueFrom, map, of, switchMap, tap} from "rxjs";
 import {expect} from 'chai'
 import {addAdmin, addKeyMaker, addRace, addVoter, readRaceResults, readVotesByVoter, readVoteTxByHash, vote} from "./vote-client.js";
@@ -7,7 +7,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('voting blockchain app', () => {
     it('should startup a server', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -24,7 +24,7 @@ describe('voting blockchain app', () => {
 
     it('should not be able to cast a double vote', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -40,7 +40,7 @@ describe('voting blockchain app', () => {
                     expect(err.log).to.equal('DOUBLE_VOTE');
                 }),
             )),
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(client => readRaceResults(client, 'dog-catcher')),
             tap(results => {
                 expect(results.value).to.deep.equal({
@@ -59,7 +59,7 @@ describe('voting blockchain app', () => {
 
     it('should require that the voter be registered before voting', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(client => vote(client, {
                 race: 'dog-catcher',
                 candidate: 'todd'
@@ -76,7 +76,7 @@ describe('voting blockchain app', () => {
 
     it('can verify a vote by its transaction hash', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -97,7 +97,7 @@ describe('voting blockchain app', () => {
 
     it('can lookup votes by a voters pubKey', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => of(undefined).pipe(
                     switchMap(() => addAdmin(adminClient)),

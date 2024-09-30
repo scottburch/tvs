@@ -1,10 +1,10 @@
 import {combineLatest, map, of, switchMap} from "rxjs";
-import {testApiClient} from "@tvs/blockchain";
+import {newRandomApiClient} from "@tvs/blockchain";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoter, vote} from "@tvs/vote";
 import {encryptPrivKey, serializeKey} from "@tvs/crypto";
 
 export const auditReadySetup = () =>
-    combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()]).pipe(
+    combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient(), newRandomApiClient()]).pipe(
         switchMap(([adminClient, keyMakerClient, voterClient, auditorClient]) => of(undefined).pipe(
             switchMap(() => addAdmin(adminClient)),
             switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),

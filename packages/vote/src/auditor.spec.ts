@@ -3,7 +3,7 @@ import {
     newTransaction,
     sendTx,
     signTx,
-    testApiClient,
+    newRandomApiClient,
     waitForCometDown,
     waitForTx
 } from "@tvs/blockchain";
@@ -27,7 +27,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('vote auditors', () => {
     it('can be created by a keymaker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, auditorClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -45,7 +45,7 @@ describe('vote auditors', () => {
 
     it('can only be created by a key maker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient()])),
             switchMap(([fakeClient, auditorClient]) => of(undefined).pipe(
                 switchMap(() => addAuditor(fakeClient, auditorClient.pubKey)),
                 catchError(err => of(err)),
@@ -67,7 +67,7 @@ describe('vote auditors', () => {
 
     it('ensures that the maker address matches the tx signer', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, auditorClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -99,7 +99,7 @@ describe('vote auditors', () => {
 
     it('can flag a vote', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, auditorClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -133,7 +133,7 @@ describe('vote auditors', () => {
 
     it('should ensure that only an auditor can flag a vote', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -162,13 +162,13 @@ describe('vote auditors', () => {
 
     it("should be able to return a list of auditors", (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
                 switchMap(() => range(0, 5).pipe(
                     mergeMap(n => of(undefined).pipe(
-                        switchMap(() => testApiClient()),
+                        switchMap(() => newRandomApiClient()),
                         switchMap(client => addAuditor(keyMakerClient, client.pubKey)),
                     ))
                 )),

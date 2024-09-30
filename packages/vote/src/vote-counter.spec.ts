@@ -1,10 +1,10 @@
-import {catchError, combineLatest, delay, firstValueFrom, of, switchMap, tap, timer} from "rxjs";
+import {catchError, combineLatest, firstValueFrom, of, switchMap, tap, timer} from "rxjs";
 import {
     newTransaction,
     sendQuery,
     sendTx,
     signTx,
-    testApiClient,
+    newRandomApiClient,
     waitForCometDown, waitForTx
 } from "@tvs/blockchain";
 import {expect} from "chai";
@@ -15,7 +15,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('vote counter', () => {
     it('can be created', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voteCounterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -33,7 +33,7 @@ describe('vote counter', () => {
 
     it('can vote more than once', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, counterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -68,7 +68,7 @@ describe('vote counter', () => {
 
     it('can only be created by a key maker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(client => of(undefined).pipe(
                 switchMap(() => addVoteCounter(client, client.pubKey)),
                 catchError(err => of(err)),
@@ -89,7 +89,7 @@ describe('vote counter', () => {
 
     it('ensures that the maker key is the same as the signer', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient1, keyMakerClient2, voteCounterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient1.pubKey)),

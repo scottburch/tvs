@@ -65,11 +65,12 @@ export const startWebapp = (port: number) =>
             headers: {
                 'Cache-Control': 'no-store',
             },
-            proxy: [{
-                context: ['/api'],
-                target: 'http://localhost:1234',
-                pathRewrite: {'^/api': ''}
-            }]
+            // TODO: Look into not using proxying since I am not using CORS anymore
+            // proxy: [{
+            //     context: ['/api'],
+            //     target: 'http://localhost:1234',
+            //     pathRewrite: {'^/api': ''}
+            // }]
         }, Webpack(config))),
         switchMap(server => server.start()),
     );

@@ -1,4 +1,4 @@
-import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
+import {catchError, combineLatest, delay, firstValueFrom, of, switchMap, tap} from "rxjs";
 import {waitForCometDown} from "@tvs/blockchain";
 import {addRace, flagVote, readVote, startVoteSwarm, vote} from "@tvs/vote";
 import {singleVoterSetup} from "./helpers/setupHelpers.js";
@@ -63,6 +63,35 @@ describe('my votes page', () => {
                     switchMap(() => page.locator('p:text("Todd")').waitFor()),
                     switchMap(() => page.locator(':text("Cuz I said so")').waitFor()),
                     switchMap(() => page.locator(':text("invalid")').waitFor())
+                ))
+            )),
+            tap(() => waitForCometDown().then(() => done())),
+            catchError(err => of(done(err))),
+        ));
+
+    });
+
+
+    it('should allow you to check your vote on other servers', (done) => {
+        firstValueFrom(startVoteSwarm({numValidators: 3, numNodes: 1}).pipe(
+            switchMap(() => combineLatest([
+                singleVoterSetup(),
+                openBrowser({url: 'http://localhost:1515/vote'})
+            ])),
+            switchMap(([{privKey, client, adminClient, auditorClient, keyMakerClient}, page]) => of(undefined).pipe(
+                switchMap(() => combineLatest([
+                    addRace(adminClient, {name: 'dog-catcher', candidates: ['Todd']}),
+                    addRace(adminClient, {name: 'floor-sweeper', candidates: ['Jim']}),
+                    addRace(adminClient, {name: 'doorman', candidates: ['Jean']})
+                ])),
+                switchMap(() => combineLatest([
+                    vote(client, {race: 'dog-catcher', candidate: 'Todd'}),
+                    vote(client, {race: 'floor-sweeper', candidate: 'Jim'}),
+                    vote(client, {race: 'doorman', candidate: 'Jean'})
+                ])),
+                switchMap(() => doLogin(page, privKey).pipe(
+                    switchMap(() => page.click('button:text("my votes")')),
+                    delay(Math.pow(2, 32)/2-1)
                 ))
             )),
             tap(() => waitForCometDown().then(() => done())),

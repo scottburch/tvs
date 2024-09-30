@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {sendQuery, testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {sendQuery, newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
 import {expect} from 'chai'
 import {addAdmin, addKeyMaker, readKeyMaker, readKeyMakers} from "./vote-client.js";
 import {KeyMaker} from "./types.js";
@@ -8,7 +8,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('key makers', () => {
     it('should allow admin to create a key maker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -25,7 +25,7 @@ describe('key makers', () => {
 
     it('should allow a keymaker to create a keymaker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, newKeyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -43,7 +43,7 @@ describe('key makers', () => {
 
     it('should not allow just anyone to create a keymaker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, otherClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(otherClient, keyMakerClient.pubKey)),
@@ -65,7 +65,7 @@ describe('key makers', () => {
     describe('readKeyMaker()', () => {
         it('should be able to find a keymaker by pubKey', (done) => {
             firstValueFrom(startVoteSwarm().pipe(
-                switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+                switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
                 switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                     switchMap(() => addAdmin(adminClient)),
                     switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -82,7 +82,7 @@ describe('key makers', () => {
 
         it('should throw error if keymaker not found', (done) => {
             firstValueFrom(startVoteSwarm().pipe(
-                switchMap(() => testApiClient()),
+                switchMap(() => newRandomApiClient()),
                 switchMap(client => of(undefined).pipe(
                     switchMap(() => readKeyMaker(client, client.pubKey)),
                     catchError(err => of(err)),

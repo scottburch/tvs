@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
 import {expect} from "chai";
 import {addAdmin, addKeyMaker, addVoter, startVoteSwarm} from "@tvs/vote";
 import {readRoles} from "./useRoles.js";
@@ -7,7 +7,7 @@ import {readRoles} from "./useRoles.js";
 describe('useRoles()', () => {
     it('should return a role for a client', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => readRoles(adminClient).pipe(
                     tap(roles => expect(roles).to.deep.equal({admin: false, keyMaker: false, voter: false, auditor: false})),

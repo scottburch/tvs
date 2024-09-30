@@ -27,8 +27,9 @@ export const startSwarm = (config: SwarmConfig, startAppFn: typeof startApp = st
         switchMap(() => setChainId(config)),
         switchMap(() => updatePersistentPeers(config)),
         switchMap(() => setGlobalConfigs(config)),
+        tap(x => x),
         switchMap(() => startNodes(config, startAppFn)),
-        delay(2000)  //TODO: Replace with something deterministic to check if the swarm is up
+        delay(2000),  //TODO: Replace with something deterministic to check if the swarm is up
     );
 
 const setGlobalConfigs = (config: SwarmConfig) =>
@@ -44,8 +45,8 @@ const setGlobalConfigs = (config: SwarmConfig) =>
             switchMap(toml => stringifyToml(toml)),
             switchMap(toml => writeConfigFile(n, toml))
         )),
+        defaultIfEmpty(undefined),
         last(),
-        defaultIfEmpty(undefined)
     )
 
 const start = Date.now();
@@ -79,7 +80,7 @@ const updatePersistentPeers = (config: SwarmConfig) =>
                 map(peers => peers.join(',')),
                 map(peers => update(toml, 'p2p.persistent_peers', peers)),
                 switchMap(toml => stringifyToml(toml)),
-                switchMap(toml => writeConfigFile(n, toml))
+                switchMap(toml => writeConfigFile(n, toml)),
             )),
         )),
         last()

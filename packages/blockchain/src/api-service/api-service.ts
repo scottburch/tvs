@@ -3,10 +3,15 @@ import express, {Express} from 'express'
 import {catchError, defaultIfEmpty, delay, firstValueFrom, last, map, Observable, of, switchMap, tap} from "rxjs";
 import {broadcastTx, query, txByHash, TvsClient, tvsClient, waitForTx} from "../rpc-client.js";
 import {Server} from "node:net";
+import cors from 'cors'
 
 export const startApiService = (app: App) => new Observable(sub => {
     const exp = express();
     exp.use(express.json());
+    exp.use(cors({
+        allowedHeaders: '*',
+        origin: '*'
+    }))
 
     const client = tvsClient();
     let server: Server;
@@ -32,11 +37,9 @@ export const startApiService = (app: App) => new Observable(sub => {
 const addTxHandler = (appConfig: AppConfig, exp: Express, client: TvsClient) =>
     of(undefined).pipe(
         tap(() => exp.options('/tx', (req, resp) => {
-            resp.header({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-type'});
             resp.send('');
         })),
         tap(() => exp.post('/tx', (req, resp) => {
-            resp.header({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-type'});
             firstValueFrom(broadcastTx(client, req.body).pipe(map(r => resp.send(JSON.stringify(r)))).pipe(
                 catchError(err => of(resp.send(JSON.stringify(err))))
             ))
@@ -48,11 +51,9 @@ const addTxHandler = (appConfig: AppConfig, exp: Express, client: TvsClient) =>
 const addQueryHandler = (appConfig: AppConfig, exp: Express, client: TvsClient) =>
     of(undefined).pipe(
         tap(() => exp.options('/query', (req, resp) => {
-            resp.header({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-type'});
             resp.send('');
         })),
         tap(() => exp.post('/query', (req, resp) => {
-            resp.header({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-type'});
             firstValueFrom(query(client, req.body).pipe(map(r => resp.send(JSON.stringify(r)))))
         })),
         defaultIfEmpty(undefined),

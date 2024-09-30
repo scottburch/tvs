@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
 import {addAdmin, addRace, readRace, readRaces} from "./vote-client.js";
 import {expect} from "chai";
 import {Race} from "./types.js";
@@ -8,7 +8,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('race', () => {
     it('should allow a admin to create a new race', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addRace(adminClient, {name: 'my-race', candidates: ['Todd', 'Scott']} satisfies Race as Race)),
@@ -25,7 +25,7 @@ describe('race', () => {
 
     it('should only allow an admin to create a race', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient()])),
             switchMap( ([adminClient, client]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addRace(client, {name: 'my-race', candidates: ['Todd', 'Scott']} satisfies Race as Race)),
@@ -44,7 +44,7 @@ describe('race', () => {
 
     it("can return a list of races", (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => combineLatest([
@@ -75,7 +75,7 @@ describe('race', () => {
 
     it('should return an empty array if there are no races', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => readRaces(adminClient)),

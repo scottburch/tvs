@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {newApiClient, newTransaction, sendQuery, sendTx, signTx, testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newApiClient, newTransaction, sendQuery, sendTx, signTx, newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
 import {generateNewKeyPair, serializeKey} from "@tvs/crypto";
 import {expect} from 'chai'
 import {addAdmin, readAdmin} from "./vote-client.js";
@@ -10,7 +10,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('voting admin', () => {
     it('should create and read voting admin', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(adminClient => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => readAdmin(adminClient)),
@@ -56,7 +56,7 @@ describe('voting admin', () => {
 
     it('should stop someone from changing the admin after creation', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(client => of(undefined).pipe(
                 switchMap(() => addAdmin(client)),
                 switchMap(() => sendQuery<Admin>(client, {path: 'get-admin', data: {}})),
@@ -66,7 +66,7 @@ describe('voting admin', () => {
                     expect(resp.value.pubKey).to.equal(client.pubKey);
                 })
             )),
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(client => addAdmin(client)),
             catchError(err => of(err)),
             tap(err => {
@@ -80,7 +80,7 @@ describe('voting admin', () => {
 
     it('should throw error if no admin exists', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => testApiClient()),
+            switchMap(() => newRandomApiClient()),
             switchMap(client => readAdmin(client)),
             catchError(err => of(err)),
             tap(err => {

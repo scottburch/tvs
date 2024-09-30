@@ -1,13 +1,13 @@
-import {combineLatest, from, last, map, mergeMap, of, range, switchMap, toArray} from "rxjs";
-import {testApiClient} from "@tvs/blockchain";
+import {combineLatest, from, last, map, mergeMap, of, range, switchMap, tap, toArray} from "rxjs";
+import {newRandomApiClient} from "@tvs/blockchain";
 import {addAdmin, addAuditor, addKeyMaker, addVoter, vote} from "@tvs/vote";
 import {encryptPrivKey, SerializedPrivKey, serializeKey} from "@tvs/crypto";
 import {addRace} from "@tvs/vote";
 
 export const noVoterSetup = () =>
     combineLatest([
-        testApiClient('QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=' as SerializedPrivKey),
-        testApiClient('YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey)
+        newRandomApiClient('QW4SpwUxXtG4WUDEnKMCAT0TLkXfqX4q9zoi5ruV2uc=' as SerializedPrivKey),
+        newRandomApiClient('YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey)
     ]).pipe(
         switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
             switchMap(() => addAdmin(adminClient)),
@@ -19,7 +19,7 @@ export const noVoterSetup = () =>
 
 
 export const singleVoterSetup = () =>
-    combineLatest([testApiClient(), testApiClient(), testApiClient(), testApiClient()]).pipe(
+    combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient(), newRandomApiClient()]).pipe(
         switchMap(([adminClient, keyMakerClient, voterClient, auditorClient]) => of(undefined).pipe(
             switchMap(() => addAdmin(adminClient)),
             switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -29,16 +29,20 @@ export const singleVoterSetup = () =>
             ])),
             switchMap(() => serializeKey(voterClient.keys.privKey)),
             switchMap(privKey => encryptPrivKey('12345', privKey)),
+            tap(privKey => {
+                console.log('@@@ voter login: ', privKey);
+                console.log('@@@ voter pubKey', voterClient.pubKey);
+            }),
             map(privKey => ({keyMakerClient, adminClient, auditorClient, client: voterClient, privKey}))
         ))
     );
 
 export const multiVoterSetup = () =>
     combineLatest([
-        testApiClient(),
-        testApiClient(),
+        newRandomApiClient(),
+        newRandomApiClient(),
         range(0, 20).pipe(
-            mergeMap(() => testApiClient()),
+            mergeMap(() => newRandomApiClient()),
             toArray())
     ]).pipe(
         switchMap(([adminClient, keyMakerClient, voters]) => of(undefined).pipe(

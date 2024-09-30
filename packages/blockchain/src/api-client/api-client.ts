@@ -1,5 +1,4 @@
-import {KeyPair, SerializedPrivKey, SerializedPubKey, serializeKey} from "@tvs/crypto";
-import {keyPairFromSerializedPrivKey} from "@tvs/crypto";
+import {generateNewKeyPair, KeyPair, keyPairFromSerializedPrivKey, SerializedPrivKey, SerializedPubKey, serializeKey} from "@tvs/crypto";
 import {combineLatest, from, map, of, switchMap, throwError} from "rxjs";
 import {BroadcastTxResponse, Query} from "../rpc-client.js";
 import {signTx, Transaction} from "../Tx.js";
@@ -29,6 +28,7 @@ export const sendTx = (client: ApiClient, tx: Transaction) =>
     signTx(tx, client.keys).pipe(
         switchMap(tx => fetch(`${client.url}/tx`, {
             ...fetchOptions,
+//            mode: 'no-cors',
             body: JSON.stringify(tx)
         })),
         switchMap(resp => resp.json()),
@@ -39,6 +39,7 @@ export const sendTx = (client: ApiClient, tx: Transaction) =>
 export const sendQuery = <T = string>(client: ApiClient, query: Query) =>
     from(fetch(`${client.url}/query`, {
         ...fetchOptions,
+//        mode: 'no-cors',
         body: JSON.stringify(query)
     })).pipe(
         switchMap(resp => resp.json()),
@@ -49,6 +50,7 @@ export const sendQuery = <T = string>(client: ApiClient, query: Query) =>
 export const getTxByHash = (client: ApiClient, hash: string) =>
     from(fetch(`${client.url}/tx-by-hash`, {
         ...fetchOptions,
+//        mode: 'no-cors',
         body: JSON.stringify({hash})
     })).pipe(
         switchMap(resp => resp.json()),
@@ -58,7 +60,15 @@ export const getTxByHash = (client: ApiClient, hash: string) =>
 export const waitForTx = (client: ApiClient, hash: string) =>
     from(fetch(`${client.url}/wait-for-tx`, {
         ...fetchOptions,
+//        mode: 'no-cors',
         body: JSON.stringify({hash})
     })).pipe(
         switchMap(resp => resp.json())
+    );
+
+export const newRandomApiClient = (url: string = 'http://localhost:1234', privKey: SerializedPrivKey = '' as SerializedPrivKey) =>
+    (privKey ? of(privKey) : generateNewKeyPair().pipe(
+        switchMap(keys => serializeKey(keys.privKey))
+    )).pipe(
+        switchMap(privKey => newApiClient({url, privKey}))
     );

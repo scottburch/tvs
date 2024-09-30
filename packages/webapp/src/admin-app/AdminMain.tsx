@@ -14,7 +14,7 @@ export const AdminMain = () => {
 
     return (
         <Box>
-            <WithClient url={`${location.protocol}//${location.host}/api`}>
+            <WithClient url={`${location.protocol}//${location.hostname}:1234`}>
                 <Header/>
                 <Box sx={{pt: '70px'}}>
                     <Routes>

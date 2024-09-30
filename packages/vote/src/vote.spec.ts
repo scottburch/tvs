@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, mergeMap, of, range, switchMap, tap, toArray} from "rxjs";
-import {testApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
 import {addAdmin, addKeyMaker, addRace, addVoteCounter, addVoter, readRaceResults, readVote, readVotesByRace, vote} from "./vote-client.js";
 import {expect} from "chai";
 import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
@@ -8,7 +8,7 @@ describe('votes', () => {
 
     it('should be able to read a vote by race and voter', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -31,7 +31,7 @@ describe('votes', () => {
 
     it('should be able to read a votes by race', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, counterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -68,14 +68,14 @@ describe('votes', () => {
 
     it('should be able to cast votes', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
                 switchMap(() => addRace(adminClient, {name: 'dog-catcher', candidates: ['Todd', 'Scott']})),
                 switchMap(() => range(0, 5).pipe(
                     mergeMap(count => of(undefined).pipe(
-                        switchMap(() => testApiClient()),
+                        switchMap(() => newRandomApiClient()),
                         switchMap(voterClient => of(undefined).pipe(
                             switchMap(() => addVoter(keyMakerClient, voterClient.pubKey)),
                             switchMap(() => vote(voterClient, {

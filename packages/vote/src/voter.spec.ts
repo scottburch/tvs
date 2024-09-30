@@ -3,7 +3,7 @@ import {
     newTransaction,
     sendTx,
     signTx,
-    testApiClient,
+    newRandomApiClient,
     waitForCometDown, waitForTx
 } from "@tvs/blockchain";
 import {addAdmin, addKeyMaker, addVoter, readVoter, readVoters} from "./vote-client.js";
@@ -14,7 +14,7 @@ import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 describe('voter', () => {
     it('can be created', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -32,7 +32,7 @@ describe('voter', () => {
 
     it('can only be created by a key maker', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient()])),
             switchMap(([fakeClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addVoter(fakeClient, voterClient.pubKey)),
                 catchError(err => of(err)),
@@ -54,7 +54,7 @@ describe('voter', () => {
 
     it('ensures that the maker address matches the tx signer', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient, voterClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
@@ -86,12 +86,12 @@ describe('voter', () => {
 
     it('can return a list of voters', (done) => {
         firstValueFrom(startVoteSwarm().pipe(
-            switchMap(() => combineLatest([testApiClient(), testApiClient()])),
+            switchMap(() => combineLatest([newRandomApiClient(), newRandomApiClient()])),
             switchMap(([adminClient, keyMakerClient]) => of(undefined).pipe(
                 switchMap(() => addAdmin(adminClient)),
                 switchMap(() => addKeyMaker(adminClient, keyMakerClient.pubKey)),
                 switchMap(() => range(0, 5)),
-                mergeMap(() => testApiClient()),
+                mergeMap(() => newRandomApiClient()),
                 mergeMap(client => addVoter(keyMakerClient, client.pubKey)),
                 toArray(),
                 switchMap(() => readVoters(adminClient)),
