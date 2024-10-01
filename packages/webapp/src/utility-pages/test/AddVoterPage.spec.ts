@@ -6,7 +6,7 @@ import {openBrowser} from "@end-game/utils/openBrowser";
 
 describe('add voter page', () => {
     it('should add a voter to the system and provide a login key', (done) => {
-        firstValueFrom(startVoteSwarm({numValidators: 2, numNodes: 1}).pipe(
+        firstValueFrom(startVoteSwarm().pipe(
             switchMap(() => noVoterSetup()),
             switchMap(({keyMakerPrivKey}) =>
                 openBrowser({url: 'http://localhost:1515/utility-pages/create-voter'})

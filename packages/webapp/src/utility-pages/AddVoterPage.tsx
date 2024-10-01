@@ -5,6 +5,7 @@ import {combineLatest, of, switchMap, tap} from "rxjs";
 import {addVoter} from "@tvs/vote";
 import {newApiClient} from "@tvs/blockchain";
 import {QRCodeSVG} from "qrcode.react";
+import {Link} from "react-router-dom";
 
 type VoterDef = {
     login: EncryptedPrivKey
@@ -39,7 +40,7 @@ export const AddVoterPage: React.FC = () => {
         <Container>
             <Stack spacing={4}>
                 <Typography variant={'body1'}>
-                    Here you can register a new voter to participate in a mock vote.  Just press 'Add Voter'.
+                    Here you can register a new voter to participate in a mock vote. Just press 'Add Voter'.
                 </Typography>
                 <Button variant={'contained'} onClick={doAddVoter}>Add Voter</Button>
                 {creatingVoter ? (
@@ -60,6 +61,13 @@ export const AddVoterPage: React.FC = () => {
                                 <TableRow>
                                     <TableCell>Voter QR Code</TableCell>
                                     <TableCell><QRCodeSVG value={voter?.login}/></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <Typography variant={'button'}>
+                                            <Link to={'/vote'}>Go To Vote App</Link>
+                                        </Typography>
+                                    </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
