@@ -31,8 +31,8 @@ export const CheckVote: React.FC<{ race: string}> = ({race}) => {
 };
 
 const orgs: Record<string, string> = {
-    'gov.org': `${window.location.protocol}//${window.location.hostname}:1234`,
-    'right-wing.org': `${window.location.protocol}//${window.location.hostname}:1235`,
-    'left-wing.org': `${window.location.protocol}//${window.location.hostname}:1236`,
-    'other.org': `${window.location.protocol}//${window.location.hostname}:1237`
+    'gov.org':  `${window.location.origin}/api`,
+    'right-wing.org':  `${window.location.origin}/api-1235`,
+    'left-wing.org':  `${window.location.origin}/api-1236`,
+    'other.org':  `${window.location.origin}/api-1237`
 }

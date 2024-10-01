@@ -14,7 +14,7 @@ export const VoterMain = () => {
 
 
     return (
-        <WithClient url={`${location.protocol}//${location.hostname}:1234`}>
+        <WithClient url={ `${window.location.origin}/api`}>
             <AuthCheck/>
             <Header/>
             <Container sx={{pt: '50px'}}>

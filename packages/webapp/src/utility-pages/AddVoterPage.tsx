@@ -18,7 +18,7 @@ export const AddVoterPage: React.FC = () => {
         generateNewKeyPair().pipe(
             tap(() => setCreatingVoter(true)),
             switchMap(keys => combineLatest([
-                newApiClient({url: `${location.protocol}//${location.hostname}:1234`, privKey: 'YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey}),
+                newApiClient({url: `${window.location.origin}/api`, privKey: 'YuBn9GAKAQPHoiKya21gr6SK1i3060kNlO8+M6QUlUo=' as SerializedPrivKey}),
                 serializeKey(keys.pubKey),
                 serializeKey(keys.privKey).pipe(
                     switchMap(privKey => encryptPrivKey('12345', privKey))
