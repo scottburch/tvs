@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "npx tsx dev.ts",
     "build": "dtg-scripts build",
-    "serve": "ws --directory dist --spa index.html --rewrite '/api/(.*) -> http://localhost:1234/$1' --port 1515",
+    "serve": "ws --directory dist --spa index.html --rewrite '/api/(.*) -> http://localhost:1234/$1' --rewrite '/api-1235/(.*) -> http://localhost:1235/$1' --rewrite '/api-1236/(.*) -> http://localhost:1236/$1' --rewrite '/api-1237/(.*) -> http://localhost:1237/$1'  --port 1515",
     "test": "dtg-scripts test"
   },
   "engines": {
