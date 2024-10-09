@@ -1,4 +1,4 @@
-import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@my-blockchain/blockchain";
 import {catchError, combineLatest, delay, firstValueFrom, map, of, switchMap, tap} from "rxjs";
 import {expect} from 'chai'
 import {addAdmin, addKeyMaker, addRace, addVoter, readRaceResults, readVotesByVoter, readVoteTxByHash, vote} from "./vote-client.js";

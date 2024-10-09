@@ -1,4 +1,4 @@
-import {generateNewKeyPair, KeyPair, keyPairFromSerializedPrivKey, SerializedPrivKey, SerializedPubKey, serializeKey} from "@tvs/crypto";
+import {generateNewKeyPair, KeyPair, keyPairFromSerializedPrivKey, SerializedPrivKey, SerializedPubKey, serializeKey} from "@my-blockchain/crypto";
 import {combineLatest, from, map, of, switchMap, throwError} from "rxjs";
 import {BroadcastTxResponse, Query} from "../rpc-client.js";
 import {signTx, Transaction} from "../Tx.js";

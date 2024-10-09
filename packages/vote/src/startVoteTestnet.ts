@@ -1,6 +1,6 @@
-import {newApiClient} from "@tvs/blockchain";
+import {newApiClient} from "@my-blockchain/blockchain";
 import {combineLatest, of, switchMap, tap} from "rxjs";
-import {encryptPrivKey, SerializedPrivKey} from "@tvs/crypto";
+import {encryptPrivKey, SerializedPrivKey} from "@my-blockchain/crypto";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoteCounter, addVoter} from "./vote-client.js";
 import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";
 

@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, mergeMap, of, range, switchMap, tap, toArray} from "rxjs";
-import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@my-blockchain/blockchain";
 import {addAdmin, addKeyMaker, addRace, addVoteCounter, addVoter, readRaceResults, readVote, readVotesByRace, vote} from "./vote-client.js";
 import {expect} from "chai";
 import {startVoteSwarm} from "./test-utils/startVoteSwarm.js";

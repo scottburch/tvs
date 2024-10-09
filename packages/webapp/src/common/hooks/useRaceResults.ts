@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from "react";
-import {ClientContext} from "@tvs/react";
+import {ClientContext} from "@my-blockchain/react";
 import {tap} from "rxjs";
 import {RaceResult, readRaceResults} from "@tvs/vote";
 

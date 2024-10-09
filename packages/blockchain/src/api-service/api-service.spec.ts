@@ -1,7 +1,7 @@
 import {startTestSwarm, waitForCometDown} from "../blockchainTestUtils.js";
 import {catchError, delay, firstValueFrom, of, switchMap, tap, throwError} from "rxjs";
 import {getTxByHash, newApiClient, sendQuery, sendTx} from "../api-client/api-client.js";
-import {generateNewKeyPair, serializeKey} from "@tvs/crypto";
+import {generateNewKeyPair, serializeKey} from "@my-blockchain/crypto";
 
 import {expect} from "chai";
 import {newTransaction, signTx} from "../Tx.js";

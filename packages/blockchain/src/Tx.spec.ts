@@ -1,6 +1,6 @@
 import {deserializeTx, newTransaction, serializeTx, signTx, Transaction, verifyTx} from "./Tx.js";
 import {combineLatest, firstValueFrom, map, of, switchMap, tap} from "rxjs";
-import {generateNewKeyPair, SerializedSig} from "@tvs/crypto";
+import {generateNewKeyPair, SerializedSig} from "@my-blockchain/crypto";
 import {expect} from "chai";
 import {isUint8Array} from "uint8array-extras";
 

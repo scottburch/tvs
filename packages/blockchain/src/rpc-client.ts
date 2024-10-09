@@ -7,7 +7,7 @@ import {
     uint8ArrayToBase64,
     uint8ArrayToHex
 } from "uint8array-extras";
-import {ResponseQuery} from "@tvs/proto";
+import {ResponseQuery} from "@my-blockchain/proto";
 import {Transaction} from "./Tx.js";
 
 export type TvsClient = {

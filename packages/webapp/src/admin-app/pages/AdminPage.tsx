@@ -2,7 +2,7 @@ import React from "react";
 import {useReadAdmin} from "../hooks/useReadAdmin.js";
 import {Box, Button, ButtonGroup, Container, Stack} from "@mui/material";
 import {useSetAdmin} from "../hooks/useSetAdmin.js";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 
 export const AdminPage: React.FC = () => {
     const [client] = useClient();

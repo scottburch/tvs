@@ -1,10 +1,10 @@
 import {useContext, useEffect, useState} from "react";
-import {ClientContext} from "@tvs/react";
+import {ClientContext} from "@my-blockchain/react";
 import {combineLatest, map, of, switchMap, tap, Observable} from "rxjs";
 import {addAuditor, Auditor} from "@tvs/vote";
-import {ApiClient} from "@tvs/blockchain";
+import {ApiClient} from "@my-blockchain/blockchain";
 import {readAuditors} from "@tvs/vote";
-import {EncryptedPrivKey, encryptPrivKey, generateNewKeyPair, SerializedPubKey, serializeKey} from "@tvs/crypto";
+import {EncryptedPrivKey, encryptPrivKey, generateNewKeyPair, SerializedPubKey, serializeKey} from "@my-blockchain/crypto";
 
 
 export const useAuditors = () => {

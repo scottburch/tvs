@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {useRaces} from "../../common/hooks/useRaces.js";
-import {Race, readVote} from "@tvs/vote";
+import {Race} from "@tvs/vote";
 import {Vote} from "../components/Vote.jsx";
 import {Box, Button, Container, Stack} from "@mui/material";
 import {ArrowBack, ArrowForward} from '@mui/icons-material';
 import {useLocation, useNavigate} from "react-router-dom";
-import {useMyVotes} from "../hooks/useMyVotes.js";
-import {useClient} from "@tvs/react";
-import {catchError, of, tap} from "rxjs";
 
 export const VoteItemPage: React.FC = () => {
     const params = useParams<{ itemNo: string }>();

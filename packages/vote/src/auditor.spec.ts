@@ -6,7 +6,7 @@ import {
     newRandomApiClient,
     waitForCometDown,
     waitForTx
-} from "@tvs/blockchain";
+} from "@my-blockchain/blockchain";
 import {
     addAdmin,
     addAuditor,

@@ -1,5 +1,5 @@
 import {Page} from 'playwright'
-import {EncryptedPrivKey} from "@tvs/crypto";
+import {EncryptedPrivKey} from "@my-blockchain/crypto";
 import {from, switchMap} from "rxjs";
 
 export const doLogin = (page: Page, privKey: EncryptedPrivKey) =>

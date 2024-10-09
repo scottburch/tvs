@@ -5,7 +5,7 @@ import {
     serializeSig,
     sign,
     verify
-} from "@tvs/crypto";
+} from "@my-blockchain/crypto";
 
 import {stringToUint8Array, uint8ArrayToString} from "uint8array-extras";
 

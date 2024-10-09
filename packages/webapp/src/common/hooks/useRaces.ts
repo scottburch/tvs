@@ -1,7 +1,7 @@
 import {Race, readRaces} from "@tvs/vote";
 import {useEffect, useState} from "react";
-import {ApiClient} from "@tvs/blockchain";
-import {useClient} from "@tvs/react";
+import {ApiClient} from "@my-blockchain/blockchain";
+import {useClient} from "@my-blockchain/react";
 import {tap} from "rxjs";
 
 export const useRaces = () => {

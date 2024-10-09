@@ -18,9 +18,9 @@ import {
     QueryHandlerResult,
     readCometConfig
 } from "./app.js";
-import {generateNewKeyPair} from "@tvs/crypto";
+import {generateNewKeyPair} from "@my-blockchain/crypto";
 import {expect} from "chai";
-import {ResponseCheckTx} from "@tvs/proto";
+import {ResponseCheckTx} from "@my-blockchain/proto";
 import {exists, findPrefix, get, put} from "./appStore.js";
 import {broadcastTestTx, startTestSwarm, waitForCometDown} from "./blockchainTestUtils.js";
 import {broadcastTx, query, tvsClient, waitForTx} from "./rpc-client.js";

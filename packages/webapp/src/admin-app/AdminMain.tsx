@@ -1,5 +1,5 @@
 import React from 'react';
-import {WithClient} from "@tvs/react";
+import {WithClient} from "@my-blockchain/react";
 import {Header} from "./components/Header.jsx";
 import {Box} from "@mui/material";
 import {Route, Routes} from "react-router";

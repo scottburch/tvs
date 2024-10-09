@@ -1,5 +1,5 @@
 import {catchError, delay, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {waitForCometDown} from "@tvs/blockchain";
+import {waitForCometDown} from "@my-blockchain/blockchain";
 import {startVoteSwarm} from "@tvs/vote";
 import {noVoterSetup} from "../../voter-app/test/helpers/setupHelpers.js";
 import {openBrowser} from "@end-game/utils/openBrowser";

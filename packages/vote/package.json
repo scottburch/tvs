@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@tvs/blockchain": "^1.0.0",
+    "@my-blockchain/blockchain": "^1.0.0",
     "@types/chai": "^4.3.17",
     "@types/mocha": "^10.0.7",
     "@types/node": "^22.3.0",

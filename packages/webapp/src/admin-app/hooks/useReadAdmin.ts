@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {catchError, interval, of, switchMap, tap, throwError} from "rxjs";
 import {Admin, readAdmin} from "@tvs/vote";
 

@@ -22,7 +22,7 @@ import {
     ResponseProcessProposal,
     ResponseProcessProposal_ProposalStatus,
     ResponseQuery
-} from "@tvs/proto";
+} from "@my-blockchain/proto";
 import {
     catchError,
     combineLatest,

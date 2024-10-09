@@ -1,7 +1,7 @@
 import {catchError, combineLatest, delay, firstValueFrom, of, switchMap, tap} from "rxjs";
 import {addRace, readVote, startVoteSwarm, vote} from "@tvs/vote";
 import {singleVoterSetup} from "../test/helpers/setupHelpers.js";
-import {waitForCometDown} from "@tvs/blockchain";
+import {waitForCometDown} from "@my-blockchain/blockchain";
 import {useCheckVote} from "./useCheckVote.js";
 import {expect} from "chai";
 

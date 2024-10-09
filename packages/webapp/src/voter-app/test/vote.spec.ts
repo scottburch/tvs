@@ -1,5 +1,5 @@
-import {catchError, combineLatest, delay, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {newApiClient, waitForCometDown} from "@tvs/blockchain";
+import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
+import {waitForCometDown} from "@my-blockchain/blockchain";
 import {addRace, startVoteSwarm} from "@tvs/vote";
 import {singleVoterSetup} from "./helpers/setupHelpers.js";
 import {openBrowser} from "@end-game/utils/openBrowser";
@@ -7,7 +7,6 @@ import {doLogin} from "./helpers/loginHelper.js";
 import {expect} from "chai";
 import {doVote} from "./helpers/voteHelper.js";
 import {omit} from 'lodash-es'
-import {EncryptedPrivKey, SerializedPrivKey} from "@tvs/crypto";
 
 describe('voting', () => {
     it('can vote', (done) => {

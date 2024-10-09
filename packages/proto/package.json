@@ -1,5 +1,5 @@
 {
-  "name": "@tvs/proto",
+  "name": "@my-blockchain/proto",
   "version": "1.0.0",
   "type": "module",
   "private": true,

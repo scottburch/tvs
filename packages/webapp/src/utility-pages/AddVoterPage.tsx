@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {Alert, Button, Container, Paper, Stack, Table, TableBody, TableCell, TableRow, Typography} from "@mui/material";
-import {EncryptedPrivKey, encryptPrivKey, generateNewKeyPair, SerializedPrivKey, serializeKey} from "@tvs/crypto";
+import {EncryptedPrivKey, encryptPrivKey, generateNewKeyPair, SerializedPrivKey, serializeKey} from "@my-blockchain/crypto";
 import {combineLatest, of, switchMap, tap} from "rxjs";
 import {addVoter} from "@tvs/vote";
-import {newApiClient} from "@tvs/blockchain";
+import {newApiClient} from "@my-blockchain/blockchain";
 import {QRCodeSVG} from "qrcode.react";
 import {Link} from "react-router-dom";
 

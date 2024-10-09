@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {generateNewKey} from "./useKeyGenerator.js";
 import {combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {decryptPrivKey} from "@tvs/crypto";
+import {decryptPrivKey} from "@my-blockchain/crypto";
 
 describe('useKeyGenerator()', () => {
     it('should generate a new key with encrypted privKey', () =>

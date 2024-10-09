@@ -4,7 +4,7 @@ import {Box, Button, Container, FormControl, InputLabel, Modal, Select, Stack} f
 import {MenuItem} from "@mui/material";
 import {raceDisplayName} from "../../common/utils/raceDisplayName.js";
 import {flagVote, readVotesByRace, Vote} from "@tvs/vote";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {from, map, switchMap, tap, toArray} from "rxjs";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
 import {Key} from "../../common/components/Key.jsx";

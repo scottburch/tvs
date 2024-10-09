@@ -1,4 +1,4 @@
-import {encryptPrivKey, generateNewKeyPair, serializeKey} from "@tvs/crypto";
+import {encryptPrivKey, generateNewKeyPair, serializeKey} from "@my-blockchain/crypto";
 import {combineLatest, map, of, switchMap} from "rxjs";
 
 

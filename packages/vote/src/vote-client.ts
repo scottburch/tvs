@@ -7,7 +7,7 @@ import {
     signTx, Transaction,
     UnsignedTransaction,
     waitForTx
-} from "@tvs/blockchain";
+} from "@my-blockchain/blockchain";
 import {map, switchMap} from "rxjs";
 import type {
     Admin,
@@ -21,7 +21,7 @@ import type {
     Voter
 } from "./types.js";
 import {STORE_PREFIX} from './types.js'
-import {SerializedPubKey} from "@tvs/crypto";
+import {SerializedPubKey} from "@my-blockchain/crypto";
 import {base64ToString} from "uint8array-extras";
 
 

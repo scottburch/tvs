@@ -3,7 +3,7 @@ import {homedir} from "node:os";
 import {$, fs} from 'zx'
 import {parseToml, stringifyToml, tomlSet} from "./tomlParser.js";
 import {get, update} from "./OrderedMap.js";
-import {AppConfig, startApp} from "@tvs/blockchain";
+import {AppConfig, startApp} from "@my-blockchain/blockchain";
 
 
 export type NodeConfig = {

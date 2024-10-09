@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import {Box, Button, MenuItem, Modal, Select, Typography} from "@mui/material";
 import {useCheckVote} from "../hooks/useCheckVote.js";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {tap} from "rxjs";
 import {Vote} from "@tvs/vote";
 

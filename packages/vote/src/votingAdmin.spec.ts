@@ -1,6 +1,6 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {newApiClient, newTransaction, sendQuery, sendTx, signTx, newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
-import {generateNewKeyPair, serializeKey} from "@tvs/crypto";
+import {newApiClient, newTransaction, sendQuery, sendTx, signTx, newRandomApiClient, waitForCometDown} from "@my-blockchain/blockchain";
+import {generateNewKeyPair, serializeKey} from "@my-blockchain/crypto";
 import {expect} from 'chai'
 import {addAdmin, readAdmin} from "./vote-client.js";
 import {Admin} from "./types.js";

@@ -1,7 +1,7 @@
 import {combineLatest, map, of, switchMap} from "rxjs";
-import {newRandomApiClient} from "@tvs/blockchain";
+import {newRandomApiClient} from "@my-blockchain/blockchain";
 import {addAdmin, addAuditor, addKeyMaker, addRace, addVoter, vote} from "@tvs/vote";
-import {encryptPrivKey, serializeKey} from "@tvs/crypto";
+import {encryptPrivKey, serializeKey} from "@my-blockchain/crypto";
 
 export const auditReadySetup = () =>
     combineLatest([newRandomApiClient(), newRandomApiClient(), newRandomApiClient(), newRandomApiClient()]).pipe(

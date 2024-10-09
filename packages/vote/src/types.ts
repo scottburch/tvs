@@ -1,4 +1,4 @@
-import {SerializedPubKey} from "@tvs/crypto";
+import {SerializedPubKey} from "@my-blockchain/crypto";
 
 export type Vote = {
     candidate: string

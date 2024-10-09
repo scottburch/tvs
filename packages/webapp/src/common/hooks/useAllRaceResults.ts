@@ -1,8 +1,8 @@
 import {useContext, useEffect, useState} from "react";
-import {ClientContext} from "@tvs/react";
+import {ClientContext} from "@my-blockchain/react";
 import {from, map, mergeMap, switchMap, tap, toArray} from "rxjs";
 import {RaceResult, readRaceResults, readRaces} from "@tvs/vote";
-import {ApiClient} from "@tvs/blockchain";
+import {ApiClient} from "@my-blockchain/blockchain";
 
 export const useAllRaceResults = () => {
     const [client] = useContext(ClientContext);

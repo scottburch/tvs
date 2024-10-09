@@ -1,7 +1,7 @@
 import {combineLatest, from, last, map, mergeMap, of, range, switchMap, tap, toArray} from "rxjs";
-import {newRandomApiClient} from "@tvs/blockchain";
+import {newRandomApiClient} from "@my-blockchain/blockchain";
 import {addAdmin, addAuditor, addKeyMaker, addVoter, vote} from "@tvs/vote";
-import {encryptPrivKey, SerializedPrivKey, serializeKey} from "@tvs/crypto";
+import {encryptPrivKey, SerializedPrivKey, serializeKey} from "@my-blockchain/crypto";
 import {addRace} from "@tvs/vote";
 
 export const noVoterSetup = () =>

@@ -2,7 +2,7 @@ import React, {PropsWithChildren, useEffect, useState} from "react";
 import {Box, Drawer, IconButton} from "@mui/material";
 import {ArrowBack, Menu} from '@mui/icons-material';
 import {Link} from "react-router-dom";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 
 
 

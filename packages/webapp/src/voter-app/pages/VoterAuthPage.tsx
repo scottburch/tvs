@@ -1,8 +1,8 @@
 import React, {useRef} from "react";
 import {Box, Button, ButtonGroup, Container, Stack, TextField, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {useClient} from "@tvs/react";
-import {decryptPrivKey} from "@tvs/crypto";
+import {useClient} from "@my-blockchain/react";
+import {decryptPrivKey} from "@my-blockchain/crypto";
 import {switchMap, tap} from "rxjs";
 import {QrTextField} from "../../common/components/QrTextField.jsx";
 

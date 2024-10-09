@@ -1,5 +1,5 @@
 import {readVotesByVoter, Vote} from "@tvs/vote";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {useEffect, useState} from "react";
 import {tap} from "rxjs";
 

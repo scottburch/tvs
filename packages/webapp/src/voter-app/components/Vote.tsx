@@ -12,7 +12,7 @@ import {
     Stack
 } from "@mui/material";
 import {readVote, readVotesByVoter, vote} from "@tvs/vote";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {filter, from, map, switchMap, defaultIfEmpty, tap, catchError, of} from "rxjs";
 
 

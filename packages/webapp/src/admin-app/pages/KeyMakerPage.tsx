@@ -3,7 +3,7 @@ import {useKeyMakers} from "../hooks/useKeyMakers.js";
 import {Box, Button, ButtonGroup, Container, Stack, TextField} from "@mui/material";
 import {useRoles} from "../hooks/useRoles.js";
 import {tap} from "rxjs";
-import {EncryptedPrivKey, SerializedPubKey} from "@tvs/crypto";
+import {EncryptedPrivKey, SerializedPubKey} from "@my-blockchain/crypto";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {Key} from "../../common/components/Key.jsx";
 

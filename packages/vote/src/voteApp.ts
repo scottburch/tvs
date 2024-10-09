@@ -9,7 +9,7 @@ import {
     QueryHandler,
     startApp,
     Transaction
-} from '@tvs/blockchain'
+} from '@my-blockchain/blockchain'
 import {
     catchError,
     combineLatest,
@@ -25,7 +25,7 @@ import {
     throwIfEmpty,
     toArray
 } from "rxjs";
-import {SerializedPubKey} from "@tvs/crypto";
+import {SerializedPubKey} from "@my-blockchain/crypto";
 import {
     Admin,
     Auditor,
@@ -40,7 +40,7 @@ import {
 } from "./types.js";
 
 
-import {AppConfig} from "@tvs/blockchain";
+import {AppConfig} from "@my-blockchain/blockchain";
 
 export type VoteAppConfig = AppConfig & {}
 

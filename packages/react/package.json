@@ -1,5 +1,5 @@
 {
-  "name": "@tvs/react",
+  "name": "@my-blockchain/react",
   "version": "1.0.0",
   "license": "MIT",
   "private": false,
@@ -19,8 +19,7 @@
     "@types/bech32": "^1.1.4",
     "@types/lodash": "^4.17.7",
     "@types/lodash-es": "^4.17.12",
-    "@tvs/blockchain": "^1.0.0",
-    "@tvs/vote": "^1.0.0",
+    "@my-blockchain/blockchain": "^1.0.0",
     "base64-js": "^1.5.1",
     "bech32": "^2.0.0",
     "lodash": "^4.17.21",

@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useEffect, useState} from "react";
 import {Box, Drawer, IconButton} from "@mui/material";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {Menu, ArrowBack} from '@mui/icons-material';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 

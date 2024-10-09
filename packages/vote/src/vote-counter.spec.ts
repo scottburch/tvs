@@ -6,7 +6,7 @@ import {
     signTx,
     newRandomApiClient,
     waitForCometDown, waitForTx
-} from "@tvs/blockchain";
+} from "@my-blockchain/blockchain";
 import {expect} from "chai";
 import {addAdmin, addKeyMaker, addRace, addVoteCounter, readVotesByVoter, vote} from "./vote-client.js";
 import {KeyMaker, VoteCounter} from "./types.js";

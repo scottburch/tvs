@@ -1,8 +1,8 @@
 import {useContext, useEffect, useState} from "react";
-import {ClientContext} from "@tvs/react";
+import {ClientContext} from "@my-blockchain/react";
 import {combineLatest, map, of, switchMap, tap} from "rxjs";
 import {addVoter, Voter} from "@tvs/vote";
-import {encryptPrivKey, generateNewKeyPair, serializeKey} from "@tvs/crypto";
+import {encryptPrivKey, generateNewKeyPair, serializeKey} from "@my-blockchain/crypto";
 import {readVoters} from "@tvs/vote";
 
 export const useVoters = () => {

@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {catchError, combineLatest, filter, interval, map, of, switchMap, tap} from "rxjs";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {readAdmin, readAuditor, readKeyMaker, readVoter} from "@tvs/vote";
-import {ApiClient} from "@tvs/blockchain";
-import {SerializedPubKey} from "@tvs/crypto";
+import {ApiClient} from "@my-blockchain/blockchain";
+import {SerializedPubKey} from "@my-blockchain/crypto";
 
 export type Roles = {
     admin: boolean

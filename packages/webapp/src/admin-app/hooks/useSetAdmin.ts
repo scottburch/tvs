@@ -1,5 +1,5 @@
 import {addAdmin} from "@tvs/vote";
-import {ApiClient} from "@tvs/blockchain";
+import {ApiClient} from "@my-blockchain/blockchain";
 
 export const useSetAdmin = () => {
 

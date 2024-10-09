@@ -1,8 +1,8 @@
 import React, {createContext, useState} from 'react'
 import type {PropsWithChildren} from 'react'
-import type {ApiClient} from '@tvs/blockchain'
-import {newApiClient} from "@tvs/blockchain";
-import {type SerializedPrivKey, type SerializedPubKey} from "@tvs/crypto";
+import type {ApiClient} from '@my-blockchain/blockchain'
+import {newApiClient} from "@my-blockchain/blockchain";
+import {type SerializedPrivKey, type SerializedPubKey} from "@my-blockchain/crypto";
 import {map, Observable, of, tap} from "rxjs";
 
 

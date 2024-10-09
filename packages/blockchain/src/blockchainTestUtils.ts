@@ -2,8 +2,8 @@ import {AppConfig, broadcastTx, newTransaction, Query, sendQuery, sendTx, signTx
 import {combineLatest, firstValueFrom, from, map, of, switchMap} from "rxjs";
 import {waitFor} from "poll-until-promise";
 import psList from "ps-list";
-import {generateNewKeyPair} from "@tvs/crypto";
-import {startSwarm} from "@tvs/blockchain";
+import {generateNewKeyPair} from "@my-blockchain/crypto";
+import {startSwarm} from "@my-blockchain/blockchain";
 import {newRandomApiClient} from "./api-client/api-client.js";
 
 

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useClient, WithClient} from "@tvs/react";
+import {useClient, WithClient} from "@my-blockchain/react";
 import {Header} from "./components/Header.jsx";
 import {Box, Container} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";

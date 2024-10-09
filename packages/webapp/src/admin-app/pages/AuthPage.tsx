@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
-import {useClient} from "@tvs/react";
+import {useClient} from "@my-blockchain/react";
 import {Alert, Box, Button, ButtonGroup, Container, Paper, Stack, TextField, Typography} from "@mui/material";
-import {decryptPrivKey, EncryptedPrivKey} from "@tvs/crypto";
+import {decryptPrivKey, EncryptedPrivKey} from "@my-blockchain/crypto";
 import {catchError, of, switchMap, tap} from "rxjs";
 import {useKeyGenerator} from "../../common/hooks/useKeyGenerator.js";
 import {QRCodeSVG} from "qrcode.react";

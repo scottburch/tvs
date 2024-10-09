@@ -1,5 +1,5 @@
 import {catchError, combineLatest, firstValueFrom, of, switchMap, tap} from "rxjs";
-import {newRandomApiClient, waitForCometDown} from "@tvs/blockchain";
+import {newRandomApiClient, waitForCometDown} from "@my-blockchain/blockchain";
 import {addAdmin, readKeyMaker, startVoteSwarm} from "@tvs/vote";
 import {createKeyMaker} from "./useKeyMakers.js";
 import {expect} from 'chai'
