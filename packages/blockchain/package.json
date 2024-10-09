@@ -2,7 +2,7 @@
   "name": "@my-blockchain/blockchain",
   "version": "1.0.0",
   "type": "module",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@my-blockchain/crypto": "^1.0.0",
     "@my-blockchain/proto": "^1.0.0",
