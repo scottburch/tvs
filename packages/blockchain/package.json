@@ -1,6 +1,7 @@
 {
   "name": "@my-blockchain/blockchain",
   "version": "1.0.0",
+  "license": "MIT",
   "type": "module",
   "private": false,
   "dependencies": {
