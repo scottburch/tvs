@@ -13,7 +13,7 @@ export const ContactUsPage: React.FC = () => (
 )
 
 const m = [
-    '<a',' h', 're', 'f="ma','il','to:', 'sco', 'tt', '@b', 'ulld', 'ogin', 'fo.c', 'om">',
-    'sco', 'tt', '@b', 'ulld', 'ogin', 'fo.c', 'om',
+    '<a',' h', 're', 'f="ma','il','to:', 'sco', 'tt', '@t', 'vs', 'vot', 'e.o', 'rg">',
+    'sco', 'tt', '@t', 'vsv', 'ote', '.o', 'rg',
     '</', 'a>'
 ]

@@ -2,6 +2,7 @@ import React from 'react'
 import {Container} from "@mui/material";
 import {Link} from "react-router-dom";
 import {BubbleConvo} from "../components/bubbles/Bubbles.jsx";
+import {YouTube} from "../components/YouTube.jsx";
 
 const convo = [
     "What's the problem?", "Trust in elections are at an all time low",
@@ -27,6 +28,7 @@ const convo = [
 export const HomePage: React.FC = () => {
     return (
         <Container>
+            <YouTube videoId={'2S40z7EzhieSkrH3'}/>
             <BubbleConvo convo={convo}/>
         </Container>
 )

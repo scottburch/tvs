@@ -4,7 +4,7 @@ import {AppBar, Box, Container, Stack, Typography} from "@mui/material";
 export const IndexPage: React.FC = () => (
     <>
         <AppBar sx={{lineHeight: 3, pl: 2, fontSize: '1.5rem'}}>
-            Welcome to the Transparent Voting System.
+            TVS-Transparent Voting
         </AppBar>
         <Box sx={{paddingTop: 10}}>
         <Container>
@@ -13,8 +13,8 @@ export const IndexPage: React.FC = () => (
                     Choose from one of the following:
                 </Typography>
                 <a href={'/utility-pages/create-voter'}>Register a new voter</a>
-                <a href={'/vote/auth'}>Vote app</a>
-                <a href={'/admin'}>TVS Admin Panel</a>
+                <a href={'/vote/auth'}>Run the Voting App</a>
+                <a href={'/admin'}>TVS Admin App</a>
             </Stack>
         </Container>
         </Box>

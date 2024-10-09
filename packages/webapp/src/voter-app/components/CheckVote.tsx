@@ -42,10 +42,10 @@ export const CheckVote: React.FC<{ race: string}> = ({race}) => {
 };
 
 const orgs: Record<string, string> = {
-    'gov.org':  `${window.location.origin}/api`,
+    'labour.org':  `${window.location.origin}/api`,
     'right-wing.org':  `${window.location.origin}/api-1235`,
     'left-wing.org':  `${window.location.origin}/api-1236`,
-    'other.org':  `${window.location.origin}/api-1237`
+    'conservative.org':  `${window.location.origin}/api-1237`
 };
 
 const modalStyle = {
