@@ -4,8 +4,8 @@ export const YouTube: React.FC<{videoId: string}> = ({videoId}) => {
 
     return (
         <iframe
-            width="560"
-            height="315"
+            width="100%"
+            height="100%"
             src={`https://www.youtube.com/embed/UlcAx6uXRsk?si=${videoId}`}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

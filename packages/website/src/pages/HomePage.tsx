@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container} from "@mui/material";
+import {Box, Container} from "@mui/material";
 import {Link} from "react-router-dom";
 import {BubbleConvo} from "../components/bubbles/Bubbles.jsx";
 import {YouTube} from "../components/YouTube.jsx";
@@ -28,8 +28,12 @@ const convo = [
 export const HomePage: React.FC = () => {
     return (
         <Container>
-            <YouTube videoId={'2S40z7EzhieSkrH3'}/>
+        <Box>
+            <Box sx={{height: {xs: '170px', sm: '316px'}, width: {xs: '300px', sm: '560px'}}}>
+                <YouTube videoId={'2S40z7EzhieSkrH3'}/>
+            </Box>
             <BubbleConvo convo={convo}/>
+        </Box>
         </Container>
 )
 };
