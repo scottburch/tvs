@@ -63,7 +63,7 @@ export const AddVoterPage: React.FC = () => {
                                     <TableCell><QRCodeSVG value={voter?.login}/></TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>
+                                    <TableCell colSpan={3}>
                                         <Typography variant={'button'}>
                                             <Link to={'/vote'}>Go To Vote App</Link>
                                         </Typography>
